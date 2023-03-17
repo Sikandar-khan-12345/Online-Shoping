@@ -9,28 +9,21 @@ import ScrollContainer from '../../components/HOC/ScrollContainer';
 import UiButton from '../../components/UI/UiButton';
 import {isValidForm, validators} from '../../constents/Validation';
 import Headers from '../../components/comancomponents/Headers';
-import RadioGroup from 'react-native-radio-buttons-group';
+import RadioForm, {
+  RadioButton,
+  RadioButtonInput,
+  RadioButtonLabel,
+} from 'react-native-simple-radio-button';
 
 const AddAddress = ({navigation}) => {
-  const [radioButtons, setRadioButtons] = useState([
-    {
-      id: '1', // acts as primary key, should be unique and non-empty string
-      label: 'Work',
-      value: 'Work',
-    },
-    {
-      id: '2',
-      label: 'Home',
-      value: 'Home',
-    },
-  ]);
-
-  const onPressRadioButton = radioButtonsArray => {
-    setRadioButtons(radioButtonsArray);
-  };
+  const items = [
+    {label: 'Home', value: 0},
+    {label: 'Work', value: 1},
+  ];
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [value, setvalue] = useState(0);
   const [firstname, setfirstname] = useState('');
   const [lastname, setlastname] = useState('');
   const [number, setnumber] = useState('');
@@ -111,17 +104,60 @@ const AddAddress = ({navigation}) => {
             </View>
             <Paragraph style={{paddingLeft: 38}}>Address Type</Paragraph>
 
-            <RadioGroup
-              radioButtons={radioButtons}
-              onPress={onPressRadioButton}
-              containerStyle={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                top: 15,
-                marginVertical: 10,
-              }}
-              borderSize={2}
-            />
+            {/* <View
+              style={{
+                alignItems: 'center',
+                top: 20,
+                marginVertical: 8,
+                right: '10%',
+              }}>
+              <RadioForm formHorizontal={true}>
+                {items.map((obj, index) => (
+                  <RadioButton labelHorizontal={true} key={index}>
+                    <RadioButtonInput
+                      obj={obj}
+                      index={index}
+                      isSelected={index === value}
+                      onPress={value => setvalue(value)}
+                      borderWidth={2}
+                      buttonInnerColor={Colors.purple}
+                      buttonOuterColor={
+                        index === value ? Colors.purple : Colors.smokegrey
+                      }
+                      buttonSize={8}
+                      // buttonOuterSize={19}
+                      buttonStyle={{}}
+                      buttonWrapStyle={{marginLeft: 70}}
+                    />
+                    <RadioButtonLabel
+                      obj={obj}
+                      index={index}
+                      labelHorizontal={true}
+                      labelStyle={{color: Colors.smokegrey}}
+                      labelWrapStyle={{}}
+                    />
+                  </RadioButton>
+                ))}
+              </RadioForm>
+            </View> */}
+
+            <View style={{alignItems: 'center', top: 20, left: '5%'}}>
+              <RadioForm
+                radio_props={items}
+                initial={value}
+                onPress={value => setvalue(value)}
+                selectedButtonColor={Colors.purple}
+                buttonColor={Colors.smokegrey}
+                formHorizontal
+                buttonSize={9}
+                buttonOuterSize={19}
+                labelStyle={{
+                  color: Colors.smokegrey,
+                  marginLeft: 10,
+                  paddingRight: 50,
+                }}
+              />
+            </View>
           </View>
         </FormContainer>
         <View style={styles.SwitchMainContainer}>

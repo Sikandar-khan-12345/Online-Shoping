@@ -1,13 +1,13 @@
-import {Image, StatusBar, StyleSheet,View, FlatList} from 'react-native';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import React from 'react';
 import ScrollContainer from '../../components/HOC/ScrollContainer';
 import Colors from '../../constents/Colors';
-import {IconPath, ImagePath} from '../../Assets';
-import Paragraph from '../../components/UI/Paragraph';
+import {ImagePath} from '../../Assets';
 import CtegoiresList from '../../components/comancomponents/CtegoiresList';
 import Headers from '../../components/comancomponents/Headers';
 import Swipers from '../../components/comancomponents/Swipers';
 import Card from '../../components/comancomponents/Card';
+import Collection from '../../components/comancomponents/Collection';
 
 const Dashboard = () => {
   const Data2 = [
@@ -94,7 +94,7 @@ const Dashboard = () => {
       p: '-55%',
     },
   ];
-  
+
   const SwipersImages1 = [
     {
       img: ImagePath.s1,
@@ -124,24 +124,62 @@ const Dashboard = () => {
       </View>
 
       <Swipers SwipersImages={SwipersImages1} />
-      <View style={styles.ShowAllContainer}>
-        <Paragraph style={{fontWeight: 'bold'}}>
-          Western dress collection
-        </Paragraph>
-        <Paragraph color={Colors.lightGray}>Show All</Paragraph>
-      </View>
+
+      <Collection title="Western dress collection" />
       <View>
-        <Card data={Data1}/>
+        <Card data={Data1} />
       </View>
 
       <Swipers SwipersImages={SwipersImages2} />
-      <View style={styles.ShowAllContainer}>
-        <Paragraph style={{fontWeight: 'bold'}}>
-          Stylish Kurti Collection
-        </Paragraph>
-        <Paragraph color={Colors.lightGray}>Show All</Paragraph>
-      </View>
+
+      <Collection title="Stylish Kurti Collection" />
       <Card data={Data2} />
+
+      <Collection title="Trending Kurti Collection" />
+      <Card data={Data1} />
+      <Swipers SwipersImages={SwipersImages1} />
+
+      <Collection title="Special Saree Collection" />
+      <Card data={Data2} />
+
+      <Collection title="Fashion Saree Collection" />
+
+      <Card data={Data1} />
+      <Swipers SwipersImages={SwipersImages2} />
+
+      <Collection title="Top Selling Kurti" />
+
+      <Card data={Data2} />
+
+      <Collection title="Long Kurti Collection" />
+
+      <Card data={Data1} />
+
+      <Swipers SwipersImages={SwipersImages1} />
+
+      <Collection title="Top Saree Collection" />
+
+      <Card data={Data2} />
+
+      <Collection title=" Womens Saree Collection" />
+      <Card data={Data1} />
+      <Swipers SwipersImages={SwipersImages2} />
+
+      <Collection title="Dresses for you" />
+      <Card data={Data2} />
+
+      <Collection title="Western Dresses For Women" />
+      <Card data={Data1} />
+
+      <Collection title="Bridal Wedding Collections" />
+      <Card data={Data2} />
+
+      <Collection title="Branded Jeans Collections" />
+      <Collection title="Steller Styles For Him" />
+      <Card data={Data1} />
+
+      <Collection title="New Arrivals Trousers" />
+      
     </ScrollContainer>
   );
 };
