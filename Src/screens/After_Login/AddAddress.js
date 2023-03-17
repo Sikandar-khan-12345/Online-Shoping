@@ -1,6 +1,5 @@
 import {StyleSheet, Text, View, Switch} from 'react-native';
 import React, {useState} from 'react';
-import NormalHeaders from '../../components/comancomponents/NormalHeaders';
 import FormContainer from '../../components/HOC/FormContainer';
 import Input from '../../components/UI/Input';
 import ViewContainer from '../../components/HOC/ViewContainer';
@@ -9,8 +8,27 @@ import Colors from '../../constents/Colors';
 import ScrollContainer from '../../components/HOC/ScrollContainer';
 import UiButton from '../../components/UI/UiButton';
 import {isValidForm, validators} from '../../constents/Validation';
+import Headers from '../../components/comancomponents/Headers';
+import RadioGroup from 'react-native-radio-buttons-group';
 
 const AddAddress = ({navigation}) => {
+  const [radioButtons, setRadioButtons] = useState([
+    {
+      id: '1', // acts as primary key, should be unique and non-empty string
+      label: 'Work',
+      value: 'Work',
+    },
+    {
+      id: '2',
+      label: 'Home',
+      value: 'Home',
+    },
+  ]);
+
+  const onPressRadioButton = radioButtonsArray => {
+    setRadioButtons(radioButtonsArray);
+  };
+
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [firstname, setfirstname] = useState('');
@@ -43,7 +61,11 @@ const AddAddress = ({navigation}) => {
 
   return (
     <ViewContainer>
-      <NormalHeaders onPress={() => navigation.goBack()} />
+      <Headers
+        title="Shipping Address"
+        type="Icon"
+        onPress={() => navigation.goBack()}
+      />
       <ScrollContainer>
         <FormContainer style={{flex: 0}}>
           <View style={{marginVertical: 20}}>
@@ -76,7 +98,7 @@ const AddAddress = ({navigation}) => {
               <View style={styles.InpContainer}>
                 <Input placeholder={'Town / City*'} onChange={settown} />
               </View>
-              <View style={[styles.InpContainer, {left: 15}]}>
+              <View style={styles.InpContainer}>
                 <Input placeholder={'Pincode*'} onChange={setpincode} />
               </View>
             </View>
@@ -88,18 +110,18 @@ const AddAddress = ({navigation}) => {
               />
             </View>
             <Paragraph style={{paddingLeft: 38}}>Address Type</Paragraph>
-            <View style={styles.hometxt}>
-              <View style={styles.GoalMainContainer}>
-                <View style={styles.GolCOntainer}>
-                  <View style={styles.GOalMiniContainer}></View>
-                </View>
-                <Paragraph color={Colors.lightGray}>Home</Paragraph>
-              </View>
-              <View style={styles.GoalMainContainer}>
-                <View style={styles.GolCOntainer}></View>
-                <Paragraph color={Colors.lightGray}>Work</Paragraph>
-              </View>
-            </View>
+
+            <RadioGroup
+              radioButtons={radioButtons}
+              onPress={onPressRadioButton}
+              containerStyle={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                top: 15,
+                marginVertical: 10,
+              }}
+              borderSize={2}
+            />
           </View>
         </FormContainer>
         <View style={styles.SwitchMainContainer}>
@@ -114,6 +136,7 @@ const AddAddress = ({navigation}) => {
             />
           </View>
         </View>
+
         <UiButton onPress={() => AddWIthValidation()} />
       </ScrollContainer>
     </ViewContainer>
@@ -125,41 +148,20 @@ export default AddAddress;
 const styles = StyleSheet.create({
   InpMainContainer: {
     flexDirection: 'row',
-    width: '80%',
-    // borderWidth: 1,
-    alignSelf: 'center',
+    width: '100%',
     height: 55,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   InpContainer: {
-    width: '50%',
-    right: 15,
+    width: '45%',
   },
   hometxt: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginVertical: 20,
   },
-  GolCOntainer: {
-    borderWidth: 1,
-    height: 15,
-    width: 15,
-    borderRadius: 50,
-    borderColor: Colors.purple,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  GOalMiniContainer: {
-    height: 10,
-    width: 10,
-    borderRadius: 50,
-    backgroundColor: Colors.purple,
-  },
-  GoalMainContainer: {
-    flexDirection: 'row',
-    width: '18%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+
   container: {
     width: 50,
     height: 40,

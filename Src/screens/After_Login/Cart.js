@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import LocalHeader from '../../components/comancomponents/LocalHeader'
-
+import Headers from '../../components/comancomponents/Headers'
 
 const Cart = () => {
   return (
     <View>
-      <LocalHeader text='Cart'/>
+      <Headers title="Cart" />
     
     </View>
   )

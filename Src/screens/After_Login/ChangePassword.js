@@ -1,15 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import NormalHeaders from '../../components/comancomponents/NormalHeaders'
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import Headers from '../../components/comancomponents/Headers';
 
 const ChangePassword = ({navigation}) => {
   return (
     <View>
-    <NormalHeaders text='Change Password' onPress={() =>navigation.goBack()}/>
+      <Headers
+        title="Change Password"
+        type="Icon"
+        onPress={() => navigation.goBack()}
+      />
     </View>
-  )
-}
+  );
+};
 
-export default ChangePassword
+export default ChangePassword;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

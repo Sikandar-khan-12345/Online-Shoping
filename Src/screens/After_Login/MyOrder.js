@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import NormalHeaders from '../../components/comancomponents/NormalHeaders'
+import Headers from '../../components/comancomponents/Headers'
 
 const MyOrder = ({navigation}) => {
   return (
     <View>
-      <NormalHeaders text='My Order' onPress={() =>navigation.goBack()}/>
+      <Headers title='My Order' type='Icon' onPress={() =>navigation.goBack()}/>
     </View>
   )
 }

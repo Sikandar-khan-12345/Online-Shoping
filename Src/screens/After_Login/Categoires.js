@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import LocalHeader from '../../components/comancomponents/LocalHeader'
+import Headers from '../../components/comancomponents/Headers'
 
 
 const Categoires = () => {
   return (
     <View>
-      <LocalHeader text='Categories'/>
+      <Headers title='Categories'/>
       
     </View>
   )

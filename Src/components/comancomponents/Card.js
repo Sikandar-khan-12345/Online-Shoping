@@ -4,43 +4,7 @@ import Paragraph from '../UI/Paragraph';
 import { IconPath } from '../../Assets';
 import Colors from '../../constents/Colors';
 
-const Card = () => {
-  const Data1 = [
-    {
-      img: require('../../Assets/images/f7.jpg'),
-      p: '-63%',
-    },
-    {
-      img: require('../../Assets/images/f8.jpg'),
-      p: '-67%',
-    },
-    {
-      img: require('../../Assets/images/f9.jpg'),
-      p: '-61%',
-    },
-    {
-      img: require('../../Assets/images/f4.jpg'),
-      p: '-66%',
-    },
-
-    {
-      img: require('../../Assets/images/f3.jpg'),
-      p: '-60%',
-    },
-
-    {
-      img: require('../../Assets/images/f5.jpg'),
-      p: '-65%',
-    },
-    {
-      img: require('../../Assets/images/f2.jpg'),
-      p: '-67%',
-    },
-    {
-      img: require('../../Assets/images/f6.jpg'),
-      p: '-55%',
-    },
-  ];
+const Card = ({data=[],horizontal=true}) => {
   const renderItem1 = ({item}) => {
     return (
       <View style={styles.fltcontainer1}>
@@ -61,7 +25,7 @@ const Card = () => {
   };
   return (
     <View>
-      <FlatList renderItem={renderItem1} data={Data1} horizontal />
+      <FlatList renderItem={renderItem1} data={data} horizontal={horizontal} />
     </View>
   );
 };

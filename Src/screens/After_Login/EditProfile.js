@@ -1,23 +1,26 @@
-import {StyleSheet, Text, View,Image} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
-import NormalHeaders from '../../components/comancomponents/NormalHeaders';
 import ViewContainer from '../../components/HOC/ViewContainer';
-import { ImagePath } from '../../Assets';
+import {ImagePath} from '../../Assets';
 import Input from '../../components/UI/Input';
 import UiButton from '../../components/UI/UiButton';
+import Headers from '../../components/comancomponents/Headers';
 
 const EditProfile = ({navigation}) => {
   return (
     <ViewContainer>
-      <NormalHeaders text="Edit Profile" onPress={() => navigation.goBack()} />
+      <Headers
+        title="Edit Profile"
+        type="Icon"
+        onPress={() => navigation.goBack()}
+      />
       <View style={styles.imgContainer}>
         <Image source={ImagePath.AppIcon} style={styles.img} />
       </View>
-      <Input placeholder={'Please Enter YOur First Name'}/>
-      <Input placeholder={'Please Enter YOur Last Name'}/>
+      <Input placeholder={'Please Enter YOur First Name'} />
+      <Input placeholder={'Please Enter YOur Last Name'} />
 
-      <UiButton text='Update Profile'/>
-
+      <UiButton text="Update Profile" />
     </ViewContainer>
   );
 };

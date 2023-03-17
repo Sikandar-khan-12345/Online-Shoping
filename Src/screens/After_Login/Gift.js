@@ -1,11 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import NormalHeaders from '../../components/comancomponents/NormalHeaders'
+import Headers from '../../components/comancomponents/Headers'
 
 const Gift = ({navigation}) => {
   return (
     <View>
-      <NormalHeaders text='Gift' onPress={() =>navigation.goBack()}/>
+       <Headers
+        title="Gift"
+        type="Icon"
+        onPress={() => navigation.goBack()}
+      />
     </View>
   )
 }

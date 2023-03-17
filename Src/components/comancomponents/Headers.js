@@ -1,12 +1,12 @@
-import {StyleSheet, Text, View,Image} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 import Paragraph from '../UI/Paragraph';
 import Clickable from '../HOC/Clickble';
-import { IconPath, ImagePath } from '../../Assets';
+import {IconPath, ImagePath} from '../../Assets';
 import Colors from '../../constents/Colors';
 
-const Headers = () => {
-  return (
+const Headers = ({title = '', type = '', onPress = () => {}}) => {
+  return title == 'DashBord' ? (
     <View style={styles.header}>
       <View style={styles.shopingContainer}>
         <Image
@@ -24,44 +24,93 @@ const Headers = () => {
         </Clickable>
       </View>
     </View>
+  ) : type == 'Icon' && title ? (
+    <View>
+      <View style={styles.header3}>
+        <Clickable style={styles.backContainer} onPress={onPress}>
+          <Image source={IconPath.back} style={styles.back} />
+        </Clickable>
+        <View>
+          <Paragraph color={Colors.white} style={{fontWeight: 'bold'}}>
+            {title}
+          </Paragraph>
+        </View>
+      </View>
+    </View>
+  ) : (
+    <View style={styles.header2}>
+      <View style={styles.shopingContainer2}>
+        <Paragraph color={Colors.white} size={20}>
+          {title}
+        </Paragraph>
+      </View>
+    </View>
   );
 };
 
 export default Headers;
 
 const styles = StyleSheet.create({
-    header: {
-        width: '100%',
-        height: 70,
-        backgroundColor: Colors.purple,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      },
-      shoping: {
-        width: 90,
-        height: 80,
-      },
-      shopingContainer: {
-        flexDirection: 'row',
-        right: 10,
-      },
-      txt: {
-        position: 'relative',
-        right: 25,
-        fontWeight: 'bold',
-      },
-      wallet: {
-        width: '50%',
-        height: '50%',
-      },
-      walletcontainer: {
-        backgroundColor: Colors.white,
-        borderRadius: 50,
-        width: 40,
-        height: 40,
-        justifyContent: 'center',
-        alignItems: 'center',
-        right: 20,
-      },
+  header3: {
+    backgroundColor: Colors.purple,
+    width: '100%',
+    height: 60,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  backContainer: {
+    width: '20%',
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  back: {
+    width: 20,
+    height: 22,
+    tintColor: Colors.white,
+  },
+  header: {
+    width: '100%',
+    height: 70,
+    backgroundColor: Colors.purple,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  shoping: {
+    width: 90,
+    height: 80,
+  },
+  header2: {
+    width: '100%',
+    height: 60,
+    backgroundColor: Colors.purple,
+    justifyContent: 'center',
+  },
+
+  shopingContainer2: {
+    left: 15,
+  },
+  shopingContainer: {
+    flexDirection: 'row',
+    right: 10,
+  },
+  txt: {
+    position: 'relative',
+    right: 25,
+    fontWeight: 'bold',
+  },
+  wallet: {
+    width: '50%',
+    height: '50%',
+  },
+  walletcontainer: {
+    backgroundColor: Colors.white,
+    borderRadius: 50,
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: 20,
+  },
 });

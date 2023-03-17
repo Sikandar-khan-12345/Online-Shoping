@@ -3,12 +3,12 @@ import React, {useState} from 'react';
 import FormContainer from '../../components/HOC/FormContainer';
 import {ImagePath} from '../../Assets';
 import ViewContainer from '../../components/HOC/ViewContainer';
-import NormalHeaders from '../../components/comancomponents/NormalHeaders';
 import Input from '../../components/UI/Input';
 import Paragraph from '../../components/UI/Paragraph';
 import Colors from '../../constents/Colors';
 import UiButton from '../../components/UI/UiButton';
 import {isValidForm, validators} from '../../constents/Validation';
+import Headers from '../../components/comancomponents/Headers';
 
 const SignUp = ({navigation}) => {
   const [firstname, setfirstname] = useState('');
@@ -33,7 +33,11 @@ const SignUp = ({navigation}) => {
   };
   return (
     <ViewContainer>
-      <NormalHeaders text="Sign Up" onPress={() => navigation.goBack()} />
+      <Headers
+        title="Sign Up"
+        type="Icon"
+        onPress={() => navigation.goBack()}
+      />
       <FormContainer>
         <View style={styles.imgContainer}>
           <Image source={ImagePath.AppIcon} style={styles.img} />

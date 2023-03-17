@@ -58,25 +58,43 @@ const Dashboard = () => {
       p: '-58%',
     },
   ];
+  const Data1 = [
+    {
+      img: require('../../Assets/images/f7.jpg'),
+      p: '-63%',
+    },
+    {
+      img: require('../../Assets/images/f8.jpg'),
+      p: '-67%',
+    },
+    {
+      img: require('../../Assets/images/f9.jpg'),
+      p: '-61%',
+    },
+    {
+      img: require('../../Assets/images/f4.jpg'),
+      p: '-66%',
+    },
 
-  const renderItem2 = ({item}) => {
-    return (
-      <View style={styles.fltcontainer1}>
-        <Image source={item.img} style={styles.img1} resizeMode="contain" />
-        <View style={styles.heartcontainer}>
-          <Image source={IconPath.wishlist} style={styles.heart} />
-        </View>
-        <View style={styles.persentcontainer}>
-          <Paragraph
-            size={13}
-            color={Colors.purple}
-            style={{fontWeight: 'bold'}}>
-            {item.p}
-          </Paragraph>
-        </View>
-      </View>
-    );
-  };
+    {
+      img: require('../../Assets/images/f3.jpg'),
+      p: '-60%',
+    },
+
+    {
+      img: require('../../Assets/images/f5.jpg'),
+      p: '-65%',
+    },
+    {
+      img: require('../../Assets/images/f2.jpg'),
+      p: '-67%',
+    },
+    {
+      img: require('../../Assets/images/f6.jpg'),
+      p: '-55%',
+    },
+  ];
+  
   const SwipersImages1 = [
     {
       img: ImagePath.s1,
@@ -100,7 +118,7 @@ const Dashboard = () => {
     <ScrollContainer style={{flex: 1}}>
       <StatusBar backgroundColor={Colors.purpledark} />
 
-      <Headers />
+      <Headers title="DashBord" />
       <View>
         <CtegoiresList />
       </View>
@@ -113,7 +131,7 @@ const Dashboard = () => {
         <Paragraph color={Colors.lightGray}>Show All</Paragraph>
       </View>
       <View>
-        <Card/>
+        <Card data={Data1}/>
       </View>
 
       <Swipers SwipersImages={SwipersImages2} />
@@ -123,8 +141,7 @@ const Dashboard = () => {
         </Paragraph>
         <Paragraph color={Colors.lightGray}>Show All</Paragraph>
       </View>
-      <FlatList renderItem={renderItem2} data={Data2} horizontal />
-      {/* <Card /> */}
+      <Card data={Data2} />
     </ScrollContainer>
   );
 };
