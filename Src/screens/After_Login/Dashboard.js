@@ -2,7 +2,7 @@ import {StatusBar, StyleSheet, View} from 'react-native';
 import React from 'react';
 import ScrollContainer from '../../components/HOC/ScrollContainer';
 import Colors from '../../constents/Colors';
-import {ImagePath} from '../../Assets';
+import {IconPath, ImagePath} from '../../Assets';
 import CtegoiresList from '../../components/comancomponents/CtegoiresList';
 import Headers from '../../components/comancomponents/Headers';
 import Swipers from '../../components/comancomponents/Swipers';
@@ -14,84 +14,102 @@ const Dashboard = () => {
     {
       img: require('../../Assets/images/secf1.jpg'),
       p: '-57%',
+      Icon: IconPath.unlike,
     },
     {
       img: require('../../Assets/images/secf2.jpg'),
       p: '-51%',
+      Icon: IconPath.unlike,
     },
     {
       img: require('../../Assets/images/secf3.jpg'),
       p: '-51%',
+      Icon: IconPath.unlike,
     },
 
     {
       img: require('../../Assets/images/secf4.jpg'),
       p: '-43%',
+      Icon: IconPath.unlike,
     },
 
     {
       img: require('../../Assets/images/secf5.jpg'),
       p: '-52%',
+      Icon: IconPath.unlike,
     },
     {
       img: require('../../Assets/images/secf6.jpg'),
       p: '-60%',
+      Icon: IconPath.unlike,
     },
 
     {
       img: require('../../Assets/images/secf7.jpg'),
       p: '-64%',
+      Icon: IconPath.unlike,
     },
 
     {
       img: require('../../Assets/images/secf8.jpg'),
       p: '-44%',
+      Icon: IconPath.unlike,
     },
 
     {
       img: require('../../Assets/images/secf9.jpg'),
       p: '-53%',
+      Icon: IconPath.unlike,
     },
 
     {
       img: require('../../Assets/images/secf10.jpg'),
       p: '-58%',
+      Icon: IconPath.unlike,
     },
   ];
   const Data1 = [
     {
       img: require('../../Assets/images/f7.jpg'),
       p: '-63%',
+      Icon: IconPath.unlike,
     },
     {
       img: require('../../Assets/images/f8.jpg'),
       p: '-67%',
+      Icon: IconPath.unlike,
     },
     {
       img: require('../../Assets/images/f9.jpg'),
       p: '-61%',
+      Icon: IconPath.unlike,
     },
     {
       img: require('../../Assets/images/f4.jpg'),
       p: '-66%',
+      Icon: IconPath.unlike,
     },
 
     {
       img: require('../../Assets/images/f3.jpg'),
       p: '-60%',
+      Icon: IconPath.unlike,
     },
 
     {
       img: require('../../Assets/images/f5.jpg'),
       p: '-65%',
+      Icon: IconPath.unlike,
     },
     {
       img: require('../../Assets/images/f2.jpg'),
       p: '-67%',
+      Icon: IconPath.unlike,
     },
     {
       img: require('../../Assets/images/f6.jpg'),
       p: '-55%',
+      Icon: IconPath.unlike,
     },
   ];
 
@@ -179,7 +197,6 @@ const Dashboard = () => {
       <Card data={Data1} />
 
       <Collection title="New Arrivals Trousers" />
-      
     </ScrollContainer>
   );
 };

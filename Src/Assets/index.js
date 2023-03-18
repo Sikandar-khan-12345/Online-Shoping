@@ -30,13 +30,8 @@ export const IconPath = {
   save: require('./icons/save.png'),
   exit: require('./icons/exit.png'),
   next: require('./icons/next.png'),
-
-
-
-
-
-
-
+  like: require('./icons/like.png'),
+  unlike: require('./icons/unlike.png'),
 };
 export const ImagePath = {
   shoping: require('./images/Online-Shoping.jpg'),
@@ -52,7 +47,4 @@ export const ImagePath = {
   secs1: require('./images/secs1.jpg'),
   secs2: require('./images/secs2.jpg'),
   secs3: require('./images/secs3.jpg'),
-  
-
-
 };

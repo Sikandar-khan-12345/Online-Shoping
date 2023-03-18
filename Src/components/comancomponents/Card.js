@@ -1,17 +1,29 @@
-import {FlatList, StyleSheet, Text, View,Image} from 'react-native';
-import React from 'react';
+import {FlatList, StyleSheet, Text, View, Image} from 'react-native';
+import React, {useState} from 'react';
 import Paragraph from '../UI/Paragraph';
-import { IconPath } from '../../Assets';
+import {IconPath} from '../../Assets';
 import Colors from '../../constents/Colors';
+import Clickable from '../HOC/Clickble';
 
-const Card = ({data=[],horizontal=true}) => {
+const Card = ({data = [], horizontal = true}) => {
+  const [LikeCHenge, setLikeCHenge] = useState(IconPath.unlike);
+
+  const ImageChengeFUnction = () => {
+    let Chenge =
+      LikeCHenge == IconPath.unlike ? IconPath.like : IconPath.unlike;
+
+    setLikeCHenge(Chenge);
+  };
   const renderItem1 = ({item}) => {
     return (
       <View style={styles.fltcontainer1}>
         <Image source={item.img} style={styles.img1} resizeMode="contain" />
-        <View style={styles.heartcontainer}>
-          <Image source={IconPath.wishlist} style={styles.heart} />
-        </View>
+        <Clickable
+          style={styles.heartcontainer}
+          onPress={() => ImageChengeFUnction()}>
+          <Image source={LikeCHenge} style={styles.heart} />
+
+        </Clickable>
         <View style={styles.persentcontainer}>
           <Paragraph
             size={13}
@@ -71,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   heart: {
-    width: '80%',
-    height: '80%',
+    width: '65%',
+    height: '65%',
   },
 });
