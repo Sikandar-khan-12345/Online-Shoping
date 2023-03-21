@@ -14,6 +14,9 @@ import MyOrder from '../screens/After_Login/MyOrder';
 import Gift from '../screens/After_Login/Gift';
 import Address from '../screens/After_Login/Address';
 import AddAddress from '../screens/After_Login/AddAddress';
+import CardDetails from '../screens/After_Login/CardDetails';
+import ShowAll from '../screens/After_Login/ShowAll';
+import Card from '../components/comancomponents/Card';
 const Stack = createNativeStackNavigator();
 
 const Routs = () => {
@@ -83,6 +86,21 @@ const Routs = () => {
         <Stack.Screen
           name="AddAddress"
           component={AddAddress}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name="CardDetails"
+          component={CardDetails}
+          options={{headerShown: false}}
+        />
+          <Stack.Screen
+          name="ShowAll"
+          component={ShowAll}
+          options={{headerShown: false}}
+        />
+            <Stack.Screen
+          name="Card"
+          component={Card}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

@@ -1,5 +1,5 @@
 import {StatusBar, StyleSheet, View} from 'react-native';
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import ScrollContainer from '../../components/HOC/ScrollContainer';
 import Colors from '../../constents/Colors';
 import {IconPath, ImagePath} from '../../Assets';
@@ -8,108 +8,237 @@ import Headers from '../../components/comancomponents/Headers';
 import Swipers from '../../components/comancomponents/Swipers';
 import Card from '../../components/comancomponents/Card';
 import Collection from '../../components/comancomponents/Collection';
+import ViewContainer from '../../components/HOC/ViewContainer';
+import {useIsFocused} from ''
 
-const Dashboard = () => {
+const Dashboard = ({navigation}) => {
+  const [ApiData, setApiData] = useState([]);
+  // useEffect(() => {
+  //   GetCategories();
+  // }, [useIsFocused]);
+
+  // const GetCategories = async () => {
+  //   try {
+  //     let Results = await fetch(
+  //       'https://charming-calf-pea-coat.cyclic.app/api/AllCategories',
+  //     );
+  //     let res = await Results.json();
+
+  //     // console.log('===>Res===>',res);
+
+  //     let ResData = await res;
+  //     let Data = ResData.data.Categories;
+
+  //     setApiData(Data);
+
+  //     // console.log('====ResData===>', ApiData);
+  //   } catch (err) {
+  //     console.log('==Error===>', err);
+  //   }
+  // };
   const Data2 = [
     {
       img: require('../../Assets/images/secf1.jpg'),
       p: '-57%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹450',
+      half: '₹1999',
+      rating: IconPath.rating,
     },
     {
       img: require('../../Assets/images/secf2.jpg'),
       p: '-51%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹550',
+      half: '₹1999',
+      rating: IconPath.rating,
     },
     {
       img: require('../../Assets/images/secf3.jpg'),
       p: '-51%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹987',
+      half: '₹1999',
+      rating: IconPath.rating,
     },
 
     {
       img: require('../../Assets/images/secf4.jpg'),
       p: '-43%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹587',
+      half: '₹1999',
+      rating: IconPath.rating,
     },
 
     {
       img: require('../../Assets/images/secf5.jpg'),
       p: '-52%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹880',
+      half: '₹1999',
+      rating: IconPath.rating,
     },
     {
       img: require('../../Assets/images/secf6.jpg'),
       p: '-60%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹1099',
+      half: '₹1999',
+      rating: IconPath.rating,
     },
 
     {
       img: require('../../Assets/images/secf7.jpg'),
       p: '-64%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹586',
+      half: '₹1999',
+      rating: IconPath.rating,
     },
 
     {
       img: require('../../Assets/images/secf8.jpg'),
       p: '-44%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹799',
+      half: '₹1999',
+      rating: IconPath.rating,
     },
 
     {
       img: require('../../Assets/images/secf9.jpg'),
       p: '-53%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹986',
+      half: '₹1999',
+      rating: IconPath.rating,
     },
 
     {
       img: require('../../Assets/images/secf10.jpg'),
       p: '-58%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹788',
+      half: '₹1999',
+      rating: IconPath.rating,
     },
   ];
   const Data1 = [
     {
+      img: require('../../Assets/images/f2.jpg'),
+      p: '-67%',
+      Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹682',
+      half: '₹1999',
+      rating: IconPath.rating,
+      sold: 'SHOPPEEN',
+      status: 'In-Stock',
+      cod: 'Available',
+      shipping: 'Free',
+    },
+    {
+      img: require('../../Assets/images/f3.jpg'),
+      p: '-60%',
+      Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹985',
+      half: '₹1999',
+      rating: IconPath.rating,
+      sold: 'SHOPPEEN',
+      status: 'In-Stock',
+      cod: 'Available',
+      shipping: 'Free',
+    },
+    {
+      img: require('../../Assets/images/f5.jpg'),
+      p: '-63%',
+      Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹720',
+      half: '₹1999',
+      rating: IconPath.rating,
+      sold: 'SHOPPEEN',
+      status: 'In-Stock',
+      cod: 'Available',
+      shipping: 'Free',
+    },
+    {
       img: require('../../Assets/images/f7.jpg'),
       p: '-63%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹460',
+      half: '₹1999',
+      rating: IconPath.rating,
+      sold: 'SHOPPEEN',
+      status: 'In-Stock',
+      cod: 'Available',
+      shipping: 'Free',
     },
     {
       img: require('../../Assets/images/f8.jpg'),
       p: '-67%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹789',
+      half: '₹1999',
+      rating: IconPath.rating,
+      sold: 'SHOPPEEN',
+      status: 'In-Stock',
+      cod: 'Available',
+      shipping: 'Free',
     },
     {
       img: require('../../Assets/images/f9.jpg'),
       p: '-61%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹764',
+      half: '₹1999',
+      rating: IconPath.rating,
+      sold: 'SHOPPEEN',
+      status: 'In-Stock',
+      cod: 'Available',
+      shipping: 'Free',
     },
     {
       img: require('../../Assets/images/f4.jpg'),
       p: '-66%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹637',
+      half: '₹1999',
+      rating: IconPath.rating,
+      sold: 'SHOPPEEN',
+      status: 'In-Stock',
+      cod: 'Available',
+      shipping: 'Free',
     },
 
-    {
-      img: require('../../Assets/images/f3.jpg'),
-      p: '-60%',
-      Icon: IconPath.unlike,
-    },
-
-    {
-      img: require('../../Assets/images/f5.jpg'),
-      p: '-65%',
-      Icon: IconPath.unlike,
-    },
-    {
-      img: require('../../Assets/images/f2.jpg'),
-      p: '-67%',
-      Icon: IconPath.unlike,
-    },
     {
       img: require('../../Assets/images/f6.jpg'),
       p: '-55%',
       Icon: IconPath.unlike,
+      name: 'DRESSES WESTERN ...',
+      price: '₹666',
+      half: '₹1999',
+      rating: IconPath.rating,
+      sold: 'SHOPPEEN',
+      status: 'In-Stock',
+      cod: 'Available',
+      shipping: 'Free',
     },
   ];
 
@@ -132,72 +261,86 @@ const Dashboard = () => {
       img: ImagePath.secs3,
     },
   ];
+
   return (
-    <ScrollContainer style={{flex: 1}}>
+    <ViewContainer>
       <StatusBar backgroundColor={Colors.purpledark} />
 
       <Headers title="DashBord" />
-      <View>
-        <CtegoiresList />
-      </View>
+      <ScrollContainer style={{flex: 1}}>
+        <View>
+          <CtegoiresList 
+            // onPress={() => navigation.navigate('CardDetails', {data: Data1})}
+          />
+        </View>
 
-      <Swipers SwipersImages={SwipersImages1} />
+        <Swipers SwipersImages={SwipersImages1} />
 
-      <Collection title="Western dress collection" />
-      <View>
+        <Collection
+          title="Western dress collection"
+          onPress={() => navigation.navigate('ShowAll', {data: Data1})}
+        />
+        <View>
+          <Card
+            data={Data1}
+            onPress={() => navigation.navigate('CardDetails', {data: Data1})}
+          />
+        </View>
+
+        <Swipers SwipersImages={SwipersImages2} />
+
+        <Collection
+          title="Stylish Kurti Collection"
+          onPress={() => navigation.navigate('ShowAll', {data: Data2})}
+        />
+        <Card data={Data2} />
+
+        <Collection title="Trending Kurti Collection" />
         <Card data={Data1} />
-      </View>
+        <Swipers SwipersImages={SwipersImages1} />
 
-      <Swipers SwipersImages={SwipersImages2} />
+        <Collection title="Special Saree Collection" />
+        <Card data={Data2} />
 
-      <Collection title="Stylish Kurti Collection" />
-      <Card data={Data2} />
+        <Collection title="Fashion Saree Collection" />
 
-      <Collection title="Trending Kurti Collection" />
-      <Card data={Data1} />
-      <Swipers SwipersImages={SwipersImages1} />
+        <Card data={Data1} />
+        <Swipers SwipersImages={SwipersImages2} />
 
-      <Collection title="Special Saree Collection" />
-      <Card data={Data2} />
+        <Collection title="Top Selling Kurti" />
 
-      <Collection title="Fashion Saree Collection" />
+        <Card data={Data2} />
 
-      <Card data={Data1} />
-      <Swipers SwipersImages={SwipersImages2} />
+        <Collection title="Long Kurti Collection" />
 
-      <Collection title="Top Selling Kurti" />
+        <Card data={Data1} />
 
-      <Card data={Data2} />
+        <Swipers SwipersImages={SwipersImages1} />
 
-      <Collection title="Long Kurti Collection" />
+        <Collection title="Top Saree Collection" />
 
-      <Card data={Data1} />
+        <Card data={Data2} />
 
-      <Swipers SwipersImages={SwipersImages1} />
+        <Collection title=" Womens Saree Collection" />
+        <Card data={Data1} />
+        <Swipers SwipersImages={SwipersImages2} />
 
-      <Collection title="Top Saree Collection" />
+        <Collection title="Dresses for you" />
+        <Card data={Data2} />
 
-      <Card data={Data2} />
+        <Collection title="Western Dresses For Women" />
+        <Card data={Data1} />
 
-      <Collection title=" Womens Saree Collection" />
-      <Card data={Data1} />
-      <Swipers SwipersImages={SwipersImages2} />
+        <Collection title="Bridal Wedding Collections" />
+        <Card data={Data2} />
 
-      <Collection title="Dresses for you" />
-      <Card data={Data2} />
+        <Collection title="Branded Jeans Collections" />
+        <Collection title="Steller Styles For Him" />
+        <Card data={Data1} />
 
-      <Collection title="Western Dresses For Women" />
-      <Card data={Data1} />
-
-      <Collection title="Bridal Wedding Collections" />
-      <Card data={Data2} />
-
-      <Collection title="Branded Jeans Collections" />
-      <Collection title="Steller Styles For Him" />
-      <Card data={Data1} />
-
-      <Collection title="New Arrivals Trousers" />
-    </ScrollContainer>
+        <Collection title="New Arrivals Trousers" />
+      </ScrollContainer>
+    </ViewContainer>
   );
 };
 

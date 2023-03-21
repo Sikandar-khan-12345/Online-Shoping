@@ -19,4 +19,6 @@ export default {
   smokegrey: '#808080',
   purple: '#AD40AF',
   purpledark: '#641662',
+  darkgray: '#5A5A5A',
+  orrenge: '#ffa534',
 };

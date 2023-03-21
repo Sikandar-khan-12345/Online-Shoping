@@ -1,40 +1,25 @@
-import {FlatList, StyleSheet, Text, View, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import Paragraph from '../UI/Paragraph';
+import {StyleSheet, Text, View, Image, FlatList} from 'react-native';
+import React, {useState} from 'react';
 import {IconPath} from '../../Assets';
 import Colors from '../../constents/Colors';
-import Clickable from '../HOC/Clickble';
-import {useIsFocused} from '@react-navigation/native';
+import Paragraph from '../../components/UI/Paragraph';
+import Clickable from '../../components/HOC/Clickble';
+import Headers from '../../components/comancomponents/Headers';
 
-const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
+const ShowAll = ({route,navigation}) => {
+  const CardList = route?.params?.data;
   const [LikeCHenge, setLikeCHenge] = useState(IconPath.unlike);
-  const [CartData, setCartData] = useState(data);
 
   const ImageChengeFUnction = index => {
     let chenge =
       LikeCHenge == IconPath.unlike ? IconPath.like : IconPath.unlike;
+
     setLikeCHenge(chenge);
   };
 
-  // useEffect(() => {
-  //   getCardData();
-  // }, [useIsFocused]);
-
-  // const getCardData = async () => {
-  //   try {
-  //     let Results = await fetch('https://charming-calf-pea-coat.cyclic.app/api/AllCategories')
-  //     let Res = await Results.json()
-  //     let ResData = await Res
-  //     let Data = ResData.data.Categories
-
-  //     // console.log('===>Data===>',Data);
-  //   } catch (err) {
-  //     console.log('===error===>', err);
-  //   }
-  // };
   const renderItem1 = ({item, index}) => {
     return (
-      <Clickable style={styles.fltcontainer1} onPress={onPress}>
+      <Clickable style={styles.fltcontainer1}>
         <View
           style={{
             borderWidth: 0,
@@ -49,7 +34,6 @@ const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
           style={styles.heartcontainer}
           onPress={() => ImageChengeFUnction(item, index)}>
           <Image source={LikeCHenge} style={styles.heart} />
-          {/* <Image source={item.Icon} style={styles.heart} /> */}
         </Clickable>
         <View style={styles.persentcontainer}>
           <Paragraph
@@ -59,6 +43,7 @@ const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
             {item.p}
           </Paragraph>
         </View>
+
         <View style={{marginVertical: 5, marginHorizontal: 15}}>
           <Paragraph color={Colors.darkgray} size={13}>
             {item.name}
@@ -77,9 +62,8 @@ const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
               flexDirection: 'row',
               marginVertical: 3,
               borderWidth: 0,
-              width: '55%',
+              width: '70%',
               justifyContent: 'space-between',
-              left: 5,
             }}>
             <Image
               source={item.rating}
@@ -107,28 +91,27 @@ const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
     );
   };
   return (
-    <View>
-      <FlatList
-        renderItem={renderItem1}
-        data={CartData}
-        horizontal={horizontal}
-      />
+    <View style={{flex: 1}}>
+      <Headers type="Icon" title="Western dress collection" onPress={() =>navigation.goBack()} />
+      <View style={{flex: 1, marginVertical: 25}}>
+        <FlatList renderItem={renderItem1} data={CardList} numColumns={2} />
+      </View>
     </View>
   );
 };
 
-export default Card;
+export default ShowAll;
 
 const styles = StyleSheet.create({
   fltcontainer1: {
-    width: 200,
+    width: 160,
     height: 290,
     borderWidth: 0.5,
     borderColor: Colors.gray,
-
-    margin: 10,
-    // backgroundColor: Colors.gray + 50,
+    margin: 5,
     borderRadius: 10,
+    left: 10,
+    marginVertical: 5,
   },
   img1: {
     width: '100%',

@@ -32,6 +32,9 @@ export const IconPath = {
   next: require('./icons/next.png'),
   like: require('./icons/like.png'),
   unlike: require('./icons/unlike.png'),
+  rating: require('./icons/rating.png'),
+
+
 };
 export const ImagePath = {
   shoping: require('./images/Online-Shoping.jpg'),

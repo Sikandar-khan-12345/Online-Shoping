@@ -15,7 +15,7 @@ const ButtomTab = () => {
     <Tab.Navigator
       initialRouteName="Dashboard"
       screenOptions={{
-        tabBarActiveTintColor: '#e91e63',
+        tabBarActiveTintColor: Colors.purple,
         tabBarHideOnKeyboard: true,
         tabBarstyle: {
           backgroundColor: '#1a3c43',

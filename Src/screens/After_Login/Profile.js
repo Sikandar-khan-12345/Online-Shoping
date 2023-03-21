@@ -88,7 +88,7 @@ const Profile = ({navigation}) => {
           </Paragraph>
         </View>
       </View>
-      <View style={{top: -15}}>
+      <View style={{top: -15, flex:1}}>
         <FlatList renderItem={renderItem} data={Data} />
       </View>
      

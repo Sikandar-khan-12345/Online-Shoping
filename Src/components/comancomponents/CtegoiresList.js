@@ -1,69 +1,84 @@
-import { StyleSheet, Text, View,Image } from 'react-native'
-import React from 'react'
-import { FlatList } from 'react-native-gesture-handler'
-import {IconPath, ImagePath} from '../../Assets';
+import {StyleSheet, Text, View, Image} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {FlatList} from 'react-native-gesture-handler';
 import Paragraph from '../UI/Paragraph';
+import {useIsFocused} from '@react-navigation/native';
+import Clickable from '../HOC/Clickble';
+import Colors from '../../constents/Colors';
 
+const CtegoiresList = ({onPress = () => {}}) => {
+  const [ApiData, setApiData] = useState([]);
+  useEffect(() => {
+    GetCategories();
+  }, [useIsFocused]);
 
-const CtegoiresList = () => {
-    const Data = [
-        {
-          img: ImagePath.sarees,
-          name: 'Sarees',
-        },
-        {
-          img: ImagePath.kurti,
-          name: 'Kurtis',
-        },
-        {
-          img: ImagePath.lehenga,
-          name: 'Lehengas',
-        },
-        {
-          img: ImagePath.trouser,
-          name: 'Trousers',
-        },
-        {
-          img: ImagePath.shirt,
-          name: 'Shirts',
-        },
-        {
-          img: ImagePath.delivery,
-          name: '4 Hours Delivery',
-        },
-      ];
-      const renderItem = ({item}) => {
-        return (
-          <View style={styles.fltcontainer}>
-            <Image source={item.img} style={styles.img} resizeMode="contain" />
-            <Paragraph size={11} style={{fontWeight: 'bold'}}>
-              {item.name}
-            </Paragraph>
-          </View>
-        );
-      };
+  const GetCategories = async () => {
+    try {
+      let Results = await fetch(
+        'https://charming-calf-pea-coat.cyclic.app/api/AllCategories',
+      );
+      let res = await Results.json();
+
+      // console.log('===>Res===>',res);
+
+      let ResData = await res;
+      let Data = ResData.data.Categories;
+
+      setApiData(Data);
+
+      console.log('====ResData===>', ApiData);
+    } catch (err) {
+      console.log('==Error===>', err);
+    }
+  };
+
+  const renderItem = ({item}) => {
+    // console.log('===Item===>',item);
+    return (
+      <Clickable style={styles.fltcontainer} onPress={onPress}>
+        <View style={styles.ImgContainer}>
+          <Image
+            source={{uri: item.Image}}
+            style={styles.img}
+            resizeMode="contain"
+          />
+        </View>
+        <Paragraph size={11} style={{fontWeight: 'bold'}}>
+          {item.title ? item.title : item.titel}
+        </Paragraph>
+      </Clickable>
+    );
+  };
   return (
     <View>
-      <FlatList renderItem={renderItem} data = {Data} horizontal/>
+      <FlatList renderItem={renderItem} data={ApiData} horizontal />
     </View>
-  )
-}
+  );
+};
 
-export default CtegoiresList
+export default CtegoiresList;
 
 const styles = StyleSheet.create({
-    fltcontainer: {
-        width: 80,
-        height: 80,
-        // borderWidth: 1,
-        // margin: 10,
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        marginVertical: 13,
-      },
-      img: {
-        width: '70%',
-        height: '70%',
-        borderRadius: 50,
-      },
-})
+  fltcontainer: {
+    width: 80,
+    height: 80,
+    // borderWidth: 1,
+    borderRadius: 40,
+    // margin: 10,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 13,
+  },
+  img: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 50,
+  },
+  ImgContainer: {
+    width: '70%',
+    height: '70%',
+    borderWidth: 0.5,
+    borderColor: Colors.gray,
+    borderRadius: 35,
+  },
+});

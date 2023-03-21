@@ -9,11 +9,7 @@ import ScrollContainer from '../../components/HOC/ScrollContainer';
 import UiButton from '../../components/UI/UiButton';
 import {isValidForm, validators} from '../../constents/Validation';
 import Headers from '../../components/comancomponents/Headers';
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from 'react-native-simple-radio-button';
+import RadioForm from 'react-native-simple-radio-button';
 
 const AddAddress = ({navigation}) => {
   const items = [
@@ -103,43 +99,6 @@ const AddAddress = ({navigation}) => {
               />
             </View>
             <Paragraph style={{paddingLeft: 38}}>Address Type</Paragraph>
-
-            {/* <View
-              style={{
-                alignItems: 'center',
-                top: 20,
-                marginVertical: 8,
-                right: '10%',
-              }}>
-              <RadioForm formHorizontal={true}>
-                {items.map((obj, index) => (
-                  <RadioButton labelHorizontal={true} key={index}>
-                    <RadioButtonInput
-                      obj={obj}
-                      index={index}
-                      isSelected={index === value}
-                      onPress={value => setvalue(value)}
-                      borderWidth={2}
-                      buttonInnerColor={Colors.purple}
-                      buttonOuterColor={
-                        index === value ? Colors.purple : Colors.smokegrey
-                      }
-                      buttonSize={8}
-                      // buttonOuterSize={19}
-                      buttonStyle={{}}
-                      buttonWrapStyle={{marginLeft: 70}}
-                    />
-                    <RadioButtonLabel
-                      obj={obj}
-                      index={index}
-                      labelHorizontal={true}
-                      labelStyle={{color: Colors.smokegrey}}
-                      labelWrapStyle={{}}
-                    />
-                  </RadioButton>
-                ))}
-              </RadioForm>
-            </View> */}
 
             <View style={{alignItems: 'center', top: 20, left: '5%'}}>
               <RadioForm
