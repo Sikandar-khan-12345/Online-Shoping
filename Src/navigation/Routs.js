@@ -17,6 +17,7 @@ import AddAddress from '../screens/After_Login/AddAddress';
 import CardDetails from '../screens/After_Login/CardDetails';
 import ShowAll from '../screens/After_Login/ShowAll';
 import Card from '../components/comancomponents/Card';
+import ProductsList from '../screens/After_Login/ProductsList';
 const Stack = createNativeStackNavigator();
 
 const Routs = () => {
@@ -101,6 +102,11 @@ const Routs = () => {
             <Stack.Screen
           name="Card"
           component={Card}
+          options={{headerShown: false}}
+        />
+            <Stack.Screen
+          name="ProductsList"
+          component={ProductsList}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

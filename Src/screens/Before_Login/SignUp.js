@@ -15,20 +15,46 @@ const SignUp = ({navigation}) => {
   const [lastname, setlastname] = useState('');
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
-  const [number, setnumber] = useState('');
+  const [gender, setgender] = useState('');
   const [error, seterror] = useState({});
 
-  const SignUpWithValidation = () => {
+  const SignUpWithValidation = async () => {
     const Form = {
       FirstName: validators.checkRequire('First Name', firstname),
       LastName: validators.checkRequire('Last Name', lastname),
       Email: validators.checkEmail('Email', email),
       Password: validators.checkPassword('Password', password),
-      Number: validators.checkPhoneNumber('Phone Number', number),
+      Gender: validators.checkRequire('Gender', gender),
     };
     seterror(Form);
     if (isValidForm(Form)) {
       navigation.navigate('Dashboard');
+
+      try {
+        let body = {
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
+          password: password,
+          gender: gender,
+        };
+        let Data = {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(body),
+        };
+        let results = await fetch(
+          'https://charming-calf-pea-coat.cyclic.app/api/shopeen/signup',
+          Data,
+        );
+
+        let res = await results.json();
+        let resdata = await res;
+
+        console.log('===Signup-resdata===>', resdata);
+      } catch (error) {
+        console.log('==SignUp-Api-Error', error);
+      }
     }
   };
   return (
@@ -66,9 +92,9 @@ const SignUp = ({navigation}) => {
         />
 
         <Input
-          placeholder={'Phone Number'}
-          onChange={setnumber}
-          error={error?.Number}
+          placeholder={'Gender'}
+          onChange={setgender}
+          error={error?.Gender}
         />
 
         <UiButton text="Sign Up" onPress={() => SignUpWithValidation()} />

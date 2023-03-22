@@ -33,6 +33,16 @@ export const IconPath = {
   like: require('./icons/like.png'),
   unlike: require('./icons/unlike.png'),
   rating: require('./icons/rating.png'),
+  NextArrow: require('./icons/NextArrow.png'),
+  delivery: require('./icons/delivery-truck.png'),
+  return: require('./icons/return.png'),
+  express: require('./icons/express-Delivery.png'),
+  craditcard: require('./icons/credit-card.png'),
+
+
+
+
+
 
 
 };
@@ -50,4 +60,7 @@ export const ImagePath = {
   secs1: require('./images/secs1.jpg'),
   secs2: require('./images/secs2.jpg'),
   secs3: require('./images/secs3.jpg'),
+  EmptyCart: require('./images/EmptyCart.jpg'),
+  EmptyWishlist: require('./images/EmptyWishlist.png'),
+
 };

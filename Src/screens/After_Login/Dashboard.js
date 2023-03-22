@@ -283,7 +283,6 @@ const Dashboard = ({navigation}) => {
         <View>
           <Card
             data={Data1}
-            onPress={() => navigation.navigate('CardDetails', {data: Data1})}
           />
         </View>
 

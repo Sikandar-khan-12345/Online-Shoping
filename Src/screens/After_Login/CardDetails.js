@@ -11,15 +11,19 @@ import Input from '../../components/UI/Input';
 import Swiper from 'react-native-swiper';
 
 const CardDetails = ({route, navigation}) => {
-  const CardList = route?.params?.data;
+  // const CardList = route?.params?.data;
   const [LikeChenge, setLikeChenge] = useState(IconPath.unlike);
   const [colorss, setcolorss] = useState(Colors.gray);
   const [count, setcount] = useState(1);
 
+  const CardListData = route?.params?.data;
+
+  console.log('====CardList===>', CardListData);
+
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: CardList[0]?.name,
+        message: CardListData.title,
       });
     } catch (error) {
       Alert.alert(error.message);
@@ -76,6 +80,7 @@ const CardDetails = ({route, navigation}) => {
     setcolorss(color);
   };
   const renderItem = ({item, index}) => {
+    // console.log('==SizeArray====>',item);
     return (
       <Clickable
         style={{
@@ -89,7 +94,7 @@ const CardDetails = ({route, navigation}) => {
           backgroundColor: colorss,
         }}
         onPress={() => ColorsChenge(index)}>
-        <Paragraph>{item.size}</Paragraph>
+        <Paragraph>{item[0]}</Paragraph>
       </Clickable>
     );
   };
@@ -101,17 +106,17 @@ const CardDetails = ({route, navigation}) => {
           <View style={{width: '100%', height: 400, borderWidth: 0}}>
             <Swiper autoplay={true} showsPagination={false}>
               <Image
-                source={CardList[0]?.img}
+                source={{uri: CardListData.Image[0]}}
                 style={{width: '100%', height: '100%'}}
                 resizeMode="contain"
               />
               <Image
-                source={CardList[0]?.img}
+                source={{uri: CardListData.Image[1]}}
                 style={{width: '100%', height: '100%'}}
                 resizeMode="contain"
               />
               <Image
-                source={CardList[0]?.img}
+                source={{uri: CardListData.Image[2]}}
                 style={{width: '100%', height: '100%'}}
                 resizeMode="contain"
               />
@@ -134,37 +139,38 @@ const CardDetails = ({route, navigation}) => {
         <View style={styles.TextMainCOntainer}>
           <View style={styles.TextMainWhiteCOntainer}>
             <Paragraph size={20} style={styles.txt}>
-              DRESSES WESTERN GEORGETTE ...
+              {CardListData.title}
             </Paragraph>
 
             <View style={styles.persentPriceMainContainer}>
               <Paragraph color={Colors.purple} style={styles.txt}>
-                {CardList[0]?.price}
+                {CardListData.disPrice}
                 {'  '}
                 <Paragraph
                   style={{textDecorationLine: 'line-through'}}
                   color={Colors.darkgray}>
-                  {CardList[0]?.half}
+                  {CardListData.sellingPrice}
                 </Paragraph>{' '}
               </Paragraph>
 
               <View style={styles.persentContainer}>
                 <Paragraph size={13} color={Colors.purple} style={styles.txt}>
-                  {CardList[0]?.p}
+                  {CardListData.disPrsent}
                 </Paragraph>
               </View>
             </View>
+
             <View style={styles.persentPriceMainContainer}>
               <Paragraph size={14} color={Colors.darkgray}>
                 Sold By:{' '}
                 <Paragraph color={Colors.purple} style={styles.txt}>
-                  {CardList[0]?.sold}
+                  {CardListData.soldBy}
                 </Paragraph>
               </Paragraph>
               <Paragraph size={14} color={Colors.darkgray}>
                 Status:{' '}
                 <Paragraph color={Colors.green} style={styles.txt}>
-                  {CardList[0]?.status}
+                  {CardListData.Status}
                 </Paragraph>{' '}
               </Paragraph>
             </View>
@@ -172,13 +178,13 @@ const CardDetails = ({route, navigation}) => {
               <Paragraph size={14} color={Colors.darkgray}>
                 COD:{' '}
                 <Paragraph color={Colors.green} style={styles.txt}>
-                  {CardList[0]?.cod}
+                  {CardListData.COD}
                 </Paragraph>
               </Paragraph>
               <Paragraph size={14} color={Colors.darkgray}>
                 Shipping:{' '}
                 <Paragraph color={Colors.purple} style={styles.txt}>
-                  {CardList[0]?.shipping}
+                  Free
                 </Paragraph>{' '}
               </Paragraph>
             </View>
@@ -188,16 +194,20 @@ const CardDetails = ({route, navigation}) => {
             </Paragraph>
 
             <View>
-              <FlatList renderItem={renderItem} data={data} horizontal />
+              <FlatList
+                renderItem={renderItem}
+                data={CardListData.Size}
+                horizontal
+              />
             </View>
             <Paragraph style={[styles.txt, {paddingVertical: 15}]}>
               Select Colors
             </Paragraph>
             <View style={styles.ColorSelectImages}>
               <Image
-                source={CardList[0]?.img}
+                source={{uri: CardListData.Image[0]}}
                 style={{width: '100%', height: '100%'}}
-                resizeMode="contain"
+                resizeMode="cover"
               />
             </View>
             <Paragraph style={[styles.txt, {paddingVertical: 15}]}>
@@ -220,6 +230,94 @@ const CardDetails = ({route, navigation}) => {
             </View>
             <Paragraph style={styles.txt}>Check Delivery</Paragraph>
             <Input placeholder={'Enter Pincode'} style={styles.inp} />
+
+            <Paragraph style={styles.txt}>Delivery & Services</Paragraph>
+            <View style={styles.DeliveryMainContainer}>
+              <View style={{flexDirection: 'row', marginVertical: 5}}>
+                <View style={styles.IconContainer2}>
+                  <Image
+                    source={IconPath.delivery}
+                    style={styles.DeliveryIMG}
+                  />
+                </View>
+                <Paragraph left={10}>Delivery in 7-9 Days</Paragraph>
+              </View>
+              <View style={{flexDirection: 'row', marginVertical: 5}}>
+                <View style={styles.IconContainer2}>
+                  <Image source={IconPath.return} style={styles.DeliveryIMG} />
+                </View>
+                <Paragraph left={10}>Return & Replacement</Paragraph>
+              </View>
+              <View style={{flexDirection: 'row', marginVertical: 5}}>
+                <View style={styles.IconContainer2}>
+                  <Image source={IconPath.express} style={styles.DeliveryIMG} />
+                </View>
+                <Paragraph left={10}>4 hrs express delivery</Paragraph>
+              </View>
+              <View style={{flexDirection: 'row', marginVertical: 5}}>
+                <View style={styles.IconContainer2}>
+                  <Image
+                    source={IconPath.craditcard}
+                    style={styles.DeliveryIMG}
+                  />
+                </View>
+                <Paragraph left={10}>Pay online or UPI id</Paragraph>
+              </View>
+            </View>
+
+            <Paragraph style={styles.txt}>Highlights</Paragraph>
+            <View style={{marginVertical: 10}}>
+              <Paragraph>
+                .{'  '}
+                <Paragraph>{CardListData.ProductDetails.fabric}</Paragraph>
+              </Paragraph>
+              <Paragraph>
+                .{'  '}
+                <Paragraph>{CardListData.ProductDetails.occasion}</Paragraph>
+              </Paragraph>
+            </View>
+            <Paragraph style={styles.txt}>Product Details</Paragraph>
+            <View style={styles.ProductsDetailsContainer}>
+              <Paragraph color={Colors.darkgray} size={13}>
+                Product Code
+              </Paragraph>
+              <Paragraph style={styles.txt}>
+                {CardListData.ProductDetails.productCode}
+              </Paragraph>
+            </View>
+            <View style={styles.ProductsDetailsContainer}>
+              <Paragraph color={Colors.darkgray} size={13}>
+                ideal For
+              </Paragraph>
+              <Paragraph style={styles.txt}>
+                {CardListData.ProductDetails.idealFor}
+              </Paragraph>
+            </View>
+            <View style={styles.ProductsDetailsContainer}>
+              <Paragraph color={Colors.darkgray} size={13}>
+                Pack Of
+              </Paragraph>
+              <Paragraph style={styles.txt}>
+                {CardListData.ProductDetails.packOf}
+              </Paragraph>
+            </View>
+            <View style={styles.ProductsDetailsContainer}>
+              <Paragraph color={Colors.darkgray} size={13}>
+                occasion
+              </Paragraph>
+              <Paragraph style={styles.txt}>
+                {CardListData.ProductDetails.occasion}
+              </Paragraph>
+            </View>
+            <View style={styles.ProductsDetailsContainer}>
+              <Paragraph color={Colors.darkgray} size={13}>
+                fabric
+              </Paragraph>
+              <Paragraph style={styles.txt}>
+                {CardListData.ProductDetails.fabric}
+              </Paragraph>
+            </View>
+
           </View>
         </View>
       </ScrollContainer>
@@ -279,13 +377,13 @@ const styles = StyleSheet.create({
   TextMainCOntainer: {
     // borderWidth: 1,
     width: '100%',
-    height: 650,
+    height: 1100,
     backgroundColor: Colors.gray + 40,
   },
   TextMainWhiteCOntainer: {
     // borderWidth:1,
     width: '100%',
-    height: 650,
+    height: 1100,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     backgroundColor: Colors.white,
@@ -362,5 +460,30 @@ const styles = StyleSheet.create({
   inp: {
     width: '100%',
     marginVertical: 10,
+  },
+  IconContainer2: {
+    // borderWidth: 1,
+    width: 35,
+    height: 35,
+    borderRadius: 17.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.purple,
+  },
+  DeliveryMainContainer: {
+    width: '95%',
+    alignSelf: 'center',
+    // borderWidth: 1,
+    // height: 100,
+    marginVertical: 15,
+  },
+  DeliveryIMG: {
+    width: '60%',
+    height: '60%',
+    tintColor: Colors.white,
+  },
+  ProductsDetailsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

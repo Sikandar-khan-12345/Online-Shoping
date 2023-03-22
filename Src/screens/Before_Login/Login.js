@@ -17,7 +17,7 @@ const Login = ({navigation}) => {
   const [error, seterror] = useState({});
   const [IMG, setIMG] = useState(IconPath.offEye);
 
-  const LoginWithValidation = () => {
+  const LoginWithValidation = async () => {
     const Form = {
       Email: validators.checkEmail('Email', email),
       Password: validators.checkPassword('Password', password),
@@ -25,6 +25,29 @@ const Login = ({navigation}) => {
     seterror(Form);
     if (isValidForm(Form)) {
       navigation.navigate('Dashboard');
+
+      try {
+        let body = {
+          email: email,
+          password: password,
+        };
+        let Data = {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(body),
+        };
+
+        let results = await fetch(
+          'https://charming-calf-pea-coat.cyclic.app/api/shopeen/login',
+          Data,
+        );
+        let res = await results.json();
+        let resdata = await res;
+
+        console.log('=====resdata=====>',resdata);
+      } catch (error) {
+        console.log('===Login-API-Error===>', error);
+      }
     }
   };
   const ImgFUnction = () => {
@@ -34,7 +57,7 @@ const Login = ({navigation}) => {
   };
   return (
     <ViewContainer>
-      <Headers title="Login" type='Icon' onPress={() => navigation.goBack()} />
+      <Headers title="Login" type="Icon" onPress={() => navigation.goBack()} />
       <FormContainer>
         <View style={styles.imgContainer}>
           <Image source={ImagePath.AppIcon} style={styles.img} />

@@ -15,23 +15,6 @@ const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
       LikeCHenge == IconPath.unlike ? IconPath.like : IconPath.unlike;
     setLikeCHenge(chenge);
   };
-
-  // useEffect(() => {
-  //   getCardData();
-  // }, [useIsFocused]);
-
-  // const getCardData = async () => {
-  //   try {
-  //     let Results = await fetch('https://charming-calf-pea-coat.cyclic.app/api/AllCategories')
-  //     let Res = await Results.json()
-  //     let ResData = await Res
-  //     let Data = ResData.data.Categories
-
-  //     // console.log('===>Data===>',Data);
-  //   } catch (err) {
-  //     console.log('===error===>', err);
-  //   }
-  // };
   const renderItem1 = ({item, index}) => {
     return (
       <Clickable style={styles.fltcontainer1} onPress={onPress}>
@@ -59,6 +42,9 @@ const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
             {item.p}
           </Paragraph>
         </View>
+
+
+        
         <View style={{marginVertical: 5, marginHorizontal: 15}}>
           <Paragraph color={Colors.darkgray} size={13}>
             {item.name}
