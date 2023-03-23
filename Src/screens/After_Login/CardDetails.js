@@ -9,15 +9,14 @@ import UiButton from '../../components/UI/UiButton';
 import Paragraph from '../../components/UI/Paragraph';
 import Input from '../../components/UI/Input';
 import Swiper from 'react-native-swiper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CardDetails = ({route, navigation}) => {
-  // const CardList = route?.params?.data;
   const [LikeChenge, setLikeChenge] = useState(IconPath.unlike);
   const [colorss, setcolorss] = useState(Colors.gray);
   const [count, setcount] = useState(1);
 
   const CardListData = route?.params?.data;
-
   console.log('====CardList===>', CardListData);
 
   const onShare = async () => {
@@ -29,11 +28,42 @@ const CardDetails = ({route, navigation}) => {
       Alert.alert(error.message);
     }
   };
-  const Like = () => {
+  const Like = async() => {
+    let token = await AsyncStorage.getItem('Token');
+    token = await JSON.parse(token);
+
+
     let chenge =
       LikeChenge == IconPath.unlike ? IconPath.like : IconPath.unlike;
 
     setLikeChenge(chenge);
+
+    let body = {
+      title: CardListData.title,
+      dis: CardListData.disPrice,
+      price: CardListData.sellingPrice,
+      img: CardListData.Image[0],
+    };
+
+    let Data = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+    };
+
+    let result = await fetch(
+      'https://charming-calf-pea-coat.cyclic.app/api/shopeen/wishlish/add',
+      Data,
+    );
+    let res = await result.json();
+    let resdata = await res;
+    if(resdata){
+      alert("Product Added Wishlist...")
+    }
+    console.log('==Wishlist-resdata====>', resdata);
   };
   const Add = () => {
     if (count < 20) {
@@ -47,29 +77,7 @@ const CardDetails = ({route, navigation}) => {
       setcount(a);
     }
   };
-  const data = [
-    {
-      size: 'S',
-      color: Colors.gray + 50,
-    },
-    {
-      size: 'M',
-      color: Colors.gray + 50,
-    },
-    {
-      size: 'L',
-      color: Colors.gray + 50,
-    },
-    {
-      size: 'XL',
-      color: Colors.gray + 50,
-    },
-    {
-      size: 'XXL',
-      color: Colors.gray + 50,
-    },
-  ];
-
+  
   const ColorsChenge = index => {
     // let arr = [...data];
     // arr[index].color =
@@ -78,6 +86,46 @@ const CardDetails = ({route, navigation}) => {
 
     let color = colorss == Colors.purple ? Colors.gray + 50 : Colors.purple;
     setcolorss(color);
+  };
+
+  const AddtoCart = async () => {
+    let token = await AsyncStorage.getItem('Token');
+    token = await JSON.parse(token)
+    // console.log("=====token",token)
+    try {
+      let body = {
+        title: CardListData.title,
+        Image: CardListData.Image[0],
+        disPrice: CardListData.disPrice,
+        sellingPrice: CardListData.sellingPrice,
+        COD: CardListData.COD,
+        Status: CardListData.Status,
+        size: CardListData.size,
+        quentity: CardListData.quentity,
+      };
+      console.log("====body==body",body)
+      let Data = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      };
+      let results = await fetch(
+        'https://charming-calf-pea-coat.cyclic.app/api/shopeen/addtocard/add',
+        Data,
+      );
+      let res = await results.json();
+      let resdata = await res;
+      if(resdata){
+        alert("Product Added...")
+      }
+      // await AsyncStorage.setItem('Cart', JSON.stringify(resdata));
+      console.log('=====AddtoCart-resdata=====>', resdata);
+    } catch (error) {
+      console.log('==AddtoCart-Api-Error====', error);
+    }
   };
   const renderItem = ({item, index}) => {
     // console.log('==SizeArray====>',item);
@@ -317,7 +365,6 @@ const CardDetails = ({route, navigation}) => {
                 {CardListData.ProductDetails.fabric}
               </Paragraph>
             </View>
-
           </View>
         </View>
       </ScrollContainer>
@@ -330,6 +377,7 @@ const CardDetails = ({route, navigation}) => {
             text="Add to Cart"
             style={styles.btn}
             textColor={Colors.purple}
+            onPress={() => AddtoCart()}
           />
         </View>
       </View>

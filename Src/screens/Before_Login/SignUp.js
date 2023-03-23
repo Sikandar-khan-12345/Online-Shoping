@@ -1,5 +1,5 @@
 import {StyleSheet, View, Image} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FormContainer from '../../components/HOC/FormContainer';
 import {ImagePath} from '../../Assets';
 import ViewContainer from '../../components/HOC/ViewContainer';
@@ -9,6 +9,8 @@ import Colors from '../../constents/Colors';
 import UiButton from '../../components/UI/UiButton';
 import {isValidForm, validators} from '../../constents/Validation';
 import Headers from '../../components/comancomponents/Headers';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 
 const SignUp = ({navigation}) => {
   const [firstname, setfirstname] = useState('');
@@ -18,7 +20,21 @@ const SignUp = ({navigation}) => {
   const [gender, setgender] = useState('');
   const [error, seterror] = useState({});
 
+  // useEffect(() => {
+  //   checkSignUpToken();
+  // }, [useIsFocused()]);
+
+  // const checkSignUpToken = async() => {
+  //   let SignUpTokenData = await AsyncStorage.getItem('SignUp')
+
+  //   if(SignUpTokenData){
+  //     navigation.navigate('ButtomTab');
+
+  //   }
+  // };
+
   const SignUpWithValidation = async () => {
+ 
     const Form = {
       FirstName: validators.checkRequire('First Name', firstname),
       LastName: validators.checkRequire('Last Name', lastname),
@@ -28,8 +44,6 @@ const SignUp = ({navigation}) => {
     };
     seterror(Form);
     if (isValidForm(Form)) {
-      navigation.navigate('Dashboard');
-
       try {
         let body = {
           firstname: firstname,
@@ -50,6 +64,11 @@ const SignUp = ({navigation}) => {
 
         let res = await results.json();
         let resdata = await res;
+
+        if (resdata.status == true) {
+          // await AsyncStorage.setItem('SignUp', JSON.stringify(resdata.token));
+          navigation.navigate('ButtomTab');
+        }
 
         console.log('===Signup-resdata===>', resdata);
       } catch (error) {

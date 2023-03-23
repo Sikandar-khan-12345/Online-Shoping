@@ -10,6 +10,8 @@ import Colors from '../../constents/Colors';
 import UiButton from '../../components/UI/UiButton';
 import {isValidForm, validators} from '../../constents/Validation';
 import Headers from '../../components/comancomponents/Headers';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Login = ({navigation}) => {
   const [email, setemail] = useState('');
@@ -24,8 +26,6 @@ const Login = ({navigation}) => {
     };
     seterror(Form);
     if (isValidForm(Form)) {
-      navigation.navigate('Dashboard');
-
       try {
         let body = {
           email: email,
@@ -44,7 +44,12 @@ const Login = ({navigation}) => {
         let res = await results.json();
         let resdata = await res;
 
-        console.log('=====resdata=====>',resdata);
+        if (resdata.status == true) {
+           await AsyncStorage.setItem('Token', JSON.stringify(resdata.token));
+          navigation.navigate('ButtomTab');
+        }
+
+        console.log('=====resdata=====>', resdata);
       } catch (error) {
         console.log('===Login-API-Error===>', error);
       }

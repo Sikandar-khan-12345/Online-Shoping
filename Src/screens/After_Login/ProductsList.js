@@ -6,16 +6,45 @@ import Paragraph from '../../components/UI/Paragraph';
 import Clickable from '../../components/HOC/Clickble';
 import Colors from '../../constents/Colors';
 import {IconPath} from '../../Assets';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProductsList = ({route, navigation}) => {
+  const ProductsData = route?.params?.data;
+  console.log('ProductsData', ProductsData);
+
   const [LikeCHenge, setLikeCHenge] = useState(IconPath.unlike);
-  const ImageChengeFUnction = index => {
+  const ImageChengeFUnction = async (index, item) => {
+    // let token = await AsyncStorage.getItem('Token');
+    // token = await JSON.parse(token);
+
     let chenge =
       LikeCHenge == IconPath.unlike ? IconPath.like : IconPath.unlike;
     setLikeCHenge(chenge);
+
+    // let body = {
+    //   title: item.title,
+    //   dis: item.disPrice,
+    //   price: item.sellingPrice,
+    //   img: item.Image[0],
+    // };
+
+    // let Data = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   body: JSON.stringify(body),
+    // };
+
+    // let result = await fetch(
+    //   'https://charming-calf-pea-coat.cyclic.app/api/shopeen/wishlish/add',
+    //   Data,
+    // );
+    // let res = await result.json();
+    // let resdata = await res;
+    // console.log('==Wishlist-resdata====>', resdata);
   };
-  const ProductsData = route?.params?.data
-  console.log('ProductsData', ProductsData);
 
   const renderItem = ({item, index}) => {
     return (
@@ -75,7 +104,11 @@ const ProductsList = ({route, navigation}) => {
         onPress={() => navigation.goBack()}
       />
       <View style={{flex: 1}}>
-        <FlatList renderItem={renderItem} data={ProductsData.Productlist} numColumns={2} />
+        <FlatList
+          renderItem={renderItem}
+          data={ProductsData.Productlist}
+          numColumns={2}
+        />
       </View>
     </ViewContainer>
   );

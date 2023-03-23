@@ -10,16 +10,18 @@ import UiButton from '../../components/UI/UiButton';
 import {isValidForm, validators} from '../../constents/Validation';
 import Headers from '../../components/comancomponents/Headers';
 import RadioForm from 'react-native-simple-radio-button';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const AddAddress = ({navigation}) => {
   const items = [
-    {label: 'Home', value: 0},
-    {label: 'Work', value: 1},
+    {label: 'Home', value: "Home"},
+    {label: 'Work', value: "Work"},
   ];
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  const [value, setvalue] = useState(0);
+  const [value, setvalue] = useState('Home');
   const [firstname, setfirstname] = useState('');
   const [lastname, setlastname] = useState('');
   const [number, setnumber] = useState('');
@@ -30,7 +32,9 @@ const AddAddress = ({navigation}) => {
   const [state, setstate] = useState('');
   const [error, seterror] = useState({});
 
-  const AddWIthValidation = () => {
+  const AddWIthValidation = async () => {
+    let token = await AsyncStorage.getItem('Token');
+    token = await JSON.parse(token)
     const form = {
       FirstName: validators.checkRequire('First Name', firstname),
       LastName: validators.checkRequire('Last Name', lastname),
@@ -44,7 +48,43 @@ const AddAddress = ({navigation}) => {
     seterror(form);
 
     if (isValidForm(form)) {
-      navigation.navigate('Address');
+      try {
+        let body = {
+          firstName: firstname,
+          lastName: lastname,
+          phoneNumber: number,
+          streetAddress: street,
+          locality: locality,
+          townCity: town,
+          postCode: pincode,
+          state: state,
+          addresstype: value,
+        };
+        // console.log("==========body===body...",body)
+        let Data = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(body),
+    
+        };
+        let results = await fetch(
+          'https://charming-calf-pea-coat.cyclic.app/api/shopeen/address/add',
+          Data,
+        );
+        let res = await results.json();
+        let resdata = await res;
+
+        if (resdata.status == true) {
+          navigation.navigate('Address');
+        }
+
+        console.log('=====resdata=====>', resdata.data);
+      } catch (error) {
+        console.log('==Addres-Api-Error===>', error);
+      }
     }
   };
 
