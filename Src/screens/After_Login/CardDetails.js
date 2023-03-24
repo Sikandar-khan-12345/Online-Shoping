@@ -28,7 +28,7 @@ const CardDetails = ({route, navigation}) => {
       Alert.alert(error.message);
     }
   };
-  const Like = async() => {
+  const AddtoWishList = async() => {
     let token = await AsyncStorage.getItem('Token');
     token = await JSON.parse(token);
 
@@ -102,6 +102,10 @@ const CardDetails = ({route, navigation}) => {
         Status: CardListData.Status,
         size: CardListData.size,
         quentity: CardListData.quentity,
+        color:CardListData.color,
+        disPrsent:CardListData.disPrsent
+      
+
       };
       console.log("====body==body",body)
       let Data = {
@@ -171,7 +175,7 @@ const CardDetails = ({route, navigation}) => {
             </Swiper>
           </View>
           <View style={{position: 'absolute', top: 15, right: 2}}>
-            <Clickable style={styles.IconContainer} onPress={() => Like()}>
+            <Clickable style={styles.IconContainer} onPress={() => AddtoWishList()}>
               <Image source={LikeChenge} style={styles.HeartIcon} />
             </Clickable>
             <Clickable style={styles.IconContainer} onPress={() => onShare()}>

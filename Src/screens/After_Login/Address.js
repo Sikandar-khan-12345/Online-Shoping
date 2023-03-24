@@ -38,8 +38,18 @@ const Address = ({navigation}) => {
       );
       let res = await result.json();
       let resdata = await res;
-
-      setAddressList(resdata.massage);
+      let obj1 = {
+        check: false,
+      };
+      let data = resdata.data;
+      let dd = data.map((item, index) => {
+        return {
+          ...item,
+          check: index ? false : true,
+        };
+      });
+      console.log('====ddd=====>>', dd);
+      setAddressList(dd);
 
       console.log('===Addres-Get-Api-AddressList===>', AddressList);
     } catch (error) {
@@ -79,8 +89,22 @@ const Address = ({navigation}) => {
       console.log('===Address-Delete-Api-error===>', error);
     }
   };
+  const checkAddress = index => {
+    let arr = [...AddressList];
 
-  const renderItem = ({item}) => {
+    if (index == 0) {
+      arr[index].check = true;
+      arr[1].check = false;
+    } else {
+      arr[index].check = true;
+      arr[0].check = false;
+    }
+
+    console.log('====sdsds=>', arr[index].check);
+
+    setAddressList(arr);
+  };
+  const renderItem = ({item, index}) => {
     return (
       <View style={styles.FlatListMainContainer}>
         <Paragraph>
@@ -92,8 +116,8 @@ const Address = ({navigation}) => {
         <View style={styles.checkboxContainer}>
           <View style={{flexDirection: 'row'}}>
             <CheckBox
-              value={isSelected}
-              onValueChange={setSelection}
+              value={item.check}
+              onValueChange={() => checkAddress(index)}
               style={styles.checkbox}
             />
             <Paragraph color={isSelected ? Colors.black : Colors.gray}>

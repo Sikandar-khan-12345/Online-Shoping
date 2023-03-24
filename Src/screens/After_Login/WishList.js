@@ -65,8 +65,11 @@ const WishList = ({navigation}) => {
     );
     let res = await data.json();
     let response = await res;
-    setWishListt(response.massage);
-    console.log('====WishList====>', WishList);
+    setWishListt(response.data||[]);
+    if (response.massage) {
+      SimpleToast.show(response.massage,SimpleToast.SHORT)
+    }
+    console.log('====WishList====>', response);
   };
 
   const renderItem = ({item}) => {

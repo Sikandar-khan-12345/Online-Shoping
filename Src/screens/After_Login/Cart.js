@@ -68,12 +68,16 @@ const Cart = () => {
       },
     };
     let data = await fetch(
-      'https://charming-calf-pea-coat.cyclic.app/api/shopeen/addtocard/',
+      'https://charming-calf-pea-coat.cyclic.app/api/shopeen/addtocard',
       obj,
     );
     let res = await data.json();
     let response = await res;
-    setcartList(response.massage);
+    console.log('response',response);
+    setcartList(response.data||[]);
+    if (response.massage) {
+      SimpleToast.show(response.massage,SimpleToast.SHORT)
+    }
     console.log('====CartList====>', cartList);
   };
   const renderItem = ({item}) => {
@@ -91,7 +95,7 @@ const Cart = () => {
           <View style={{borderWidth: 0, width: '100%', height: 20}}>
             <Paragraph style={styles.txt}>{item.title}...</Paragraph>
           </View>
-          <Paragraph style={styles.txt1}>Color:</Paragraph>
+          <Paragraph style={styles.txt1}>Color:{item.color}</Paragraph>
           <Paragraph style={styles.txt1}>Size:</Paragraph>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Paragraph style={styles.txt} size={15}>
@@ -106,7 +110,7 @@ const Cart = () => {
 
             <View style={styles.persentContainer}>
               <Paragraph size={13} color={Colors.purple} style={styles.txt}>
-                -{item.disPrsent}69% Off
+                -{item.disPrsent}Off
               </Paragraph>
             </View>
           </View>
