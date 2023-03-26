@@ -14,12 +14,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Login = ({navigation}) => {
+  const [loaded, setloaded] = useState(false)
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [error, seterror] = useState({});
   const [IMG, setIMG] = useState(IconPath.offEye);
 
   const LoginWithValidation = async () => {
+    setloaded(true)
     const Form = {
       Email: validators.checkEmail('Email', email),
       Password: validators.checkPassword('Password', password),
@@ -51,9 +53,11 @@ const Login = ({navigation}) => {
 
         console.log('=====resdata=====>', resdata);
       } catch (error) {
+        alert('Sorry! Login Api Error')
         console.log('===Login-API-Error===>', error);
       }
     }
+    setloaded(false)
   };
   const ImgFUnction = () => {
     let chenge = IMG == IconPath.offEye ? IconPath.onEye : IconPath.offEye;
@@ -90,7 +94,7 @@ const Login = ({navigation}) => {
         <Clickable style={{alignSelf: 'flex-end', right: 38}}>
           <Paragraph color={Colors.lightGray}>Forgot Password</Paragraph>
         </Clickable>
-        <UiButton text="Sign in" onPress={() => LoginWithValidation()} />
+        <UiButton text="Sign in" onPress={() => LoginWithValidation()} loading = {loaded}/>
         <Paragraph textAlign="center">OR</Paragraph>
         <UiButton
           text="Sign Up"

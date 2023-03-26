@@ -9,9 +9,11 @@ import {useIsFocused} from '@react-navigation/native';
 import ViewContainer from '../../components/HOC/ViewContainer';
 import Clickable from '../../components/HOC/Clickble';
 import SimpleToast from 'react-native-simple-toast';
+import Loader from '../../components/UI/Loader';
 
 const Cart = () => {
   const [cartList, setcartList] = useState([]);
+  const [loaded, setloaded] = useState(false);
   const [count, setcount] = useState(1);
   const Add = () => {
     if (count < 20) {
@@ -25,7 +27,7 @@ const Cart = () => {
       setcount(a);
     }
   };
-  const DeleteAPI = async (item) => {
+  const DeleteAPI = async item => {
     let token = await AsyncStorage.getItem('Token');
     token = await JSON.parse(token);
     let Data = {
@@ -58,8 +60,10 @@ const Cart = () => {
     getCartData();
   }, [useIsFocused()]);
   const getCartData = async () => {
+    setloaded(true)
     let token = await AsyncStorage.getItem('Token');
     token = await JSON.parse(token);
+    // console.log('===Token====>',token);
     let obj = {
       method: 'GET',
       headers: {
@@ -67,18 +71,28 @@ const Cart = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-    let data = await fetch(
-      'https://charming-calf-pea-coat.cyclic.app/api/shopeen/addtocard',
-      obj,
-    );
-    let res = await data.json();
-    let response = await res;
-    console.log('response',response);
-    setcartList(response.data||[]);
-    if (response.massage) {
-      SimpleToast.show(response.massage,SimpleToast.SHORT)
+
+    try{
+      let data = await fetch(
+        'https://charming-calf-pea-coat.cyclic.app/api/shopeen/addtocard',
+        obj,
+      );
+      let res = await data.json();
+      let response = await res;
+      // console.log('response', response);
+  
+      setcartList(response.data || []);
+      if (response.massage) {
+        SimpleToast.show(response.massage, SimpleToast.SHORT);
+      }
+      console.log('====CartList====>', cartList);
     }
-    console.log('====CartList====>', cartList);
+    catch(err){
+      alert('Sorry! Cart Api Internal Server Error')
+      console.log('===AddToCart-Get-Api-Error',err);
+    }
+    setloaded(false);
+  
   };
   const renderItem = ({item}) => {
     // console.log('====Cart===Item===>', item);
@@ -152,7 +166,7 @@ const Cart = () => {
   return (
     <ViewContainer>
       <Headers title="Cart" />
-      <FlatList renderItem={renderItem} data={cartList} />
+      <Loader loading={loaded} />
       {cartList?.length == 0 ? (
         <View style={styles.CartListContainer}>
           <Image source={ImagePath.EmptyCart} style={styles.CartListImg} />
@@ -163,6 +177,7 @@ const Cart = () => {
       ) : (
         ''
       )}
+      <FlatList renderItem={renderItem} data={cartList} />
     </ViewContainer>
   );
 };

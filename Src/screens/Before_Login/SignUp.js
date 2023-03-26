@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 
 const SignUp = ({navigation}) => {
+  const [loaded, setloaded] = useState(false)
   const [firstname, setfirstname] = useState('');
   const [lastname, setlastname] = useState('');
   const [email, setemail] = useState('');
@@ -34,6 +35,7 @@ const SignUp = ({navigation}) => {
   // };
 
   const SignUpWithValidation = async () => {
+    setloaded(true)
  
     const Form = {
       FirstName: validators.checkRequire('First Name', firstname),
@@ -72,9 +74,12 @@ const SignUp = ({navigation}) => {
 
         console.log('===Signup-resdata===>', resdata);
       } catch (error) {
+        alert('Sorry! SignUp Api Error')
         console.log('==SignUp-Api-Error', error);
       }
     }
+
+    setloaded(false)
   };
   return (
     <ViewContainer>
@@ -116,7 +121,7 @@ const SignUp = ({navigation}) => {
           error={error?.Gender}
         />
 
-        <UiButton text="Sign Up" onPress={() => SignUpWithValidation()} />
+        <UiButton text="Sign Up" onPress={() => SignUpWithValidation()} loading = {loaded} />
         <Paragraph textAlign="center">
           I have Alrdy Account?{' '}
           <Paragraph

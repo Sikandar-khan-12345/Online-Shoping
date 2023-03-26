@@ -1,5 +1,5 @@
 import {StatusBar, StyleSheet, View} from 'react-native';
-import React,{useEffect,useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ScrollContainer from '../../components/HOC/ScrollContainer';
 import Colors from '../../constents/Colors';
 import {IconPath, ImagePath} from '../../Assets';
@@ -9,33 +9,77 @@ import Swipers from '../../components/comancomponents/Swipers';
 import Card from '../../components/comancomponents/Card';
 import Collection from '../../components/comancomponents/Collection';
 import ViewContainer from '../../components/HOC/ViewContainer';
-import {useIsFocused} from ''
+import {useIsFocused} from '@react-navigation/native';
+import Loader from '../../components/UI/Loader';
 
 const Dashboard = ({navigation}) => {
-  const [ApiData, setApiData] = useState([]);
-  // useEffect(() => {
-  //   GetCategories();
-  // }, [useIsFocused]);
+  const [loaded, setloaded] = useState(true);
+  const [WesternDressApiData, setWesternDressApiData] = useState([]);
+  const [StylishKurtiApiData, setStylishKurtiApiData] = useState([]);
+  const [SpecialSareeApiData, setSpecialSareeApiData] = useState([]);
+  useEffect(() => {
+    GetWesternDress();
+    GetStylishKurti();
+    GetSpecialSaree();
+  }, [useIsFocused()]);
 
-  // const GetCategories = async () => {
-  //   try {
-  //     let Results = await fetch(
-  //       'https://charming-calf-pea-coat.cyclic.app/api/AllCategories',
-  //     );
-  //     let res = await Results.json();
+  const GetWesternDress = async () => {
+    try {
+      let result = await fetch(
+        'https://charming-calf-pea-coat.cyclic.app/api/AllCategories/WDC',
+      );
 
-  //     // console.log('===>Res===>',res);
+      let res = await result.json();
+      let resdata = await res;
 
-  //     let ResData = await res;
-  //     let Data = ResData.data.Categories;
+      let ApiData = resdata.Westerndresscollections[0].Productlist;
 
-  //     setApiData(Data);
+      setWesternDressApiData(ApiData);
+      // console.log('===WesternDress-Api-resdata======>', WesternDressApiData);
+    } catch (error) {
+      console.log('====WesternDress-API-Error====>', error);
+    }
+    setloaded(false);
+  };
 
-  //     // console.log('====ResData===>', ApiData);
-  //   } catch (err) {
-  //     console.log('==Error===>', err);
-  //   }
-  // };
+  const GetStylishKurti = async () => {
+    try {
+      let result = await fetch(
+        'https://charming-calf-pea-coat.cyclic.app/api/AllCategories/SKC',
+      );
+
+      let res = await result.json();
+      let resdata = await res;
+
+      let ApiData = resdata.StylishKurtiCollections[0].Productlist;
+
+      setStylishKurtiApiData(ApiData);
+      // console.log('===StylishKurti-Api-resdata======>', StylishKurtiApiData);
+    } catch (error) {
+      console.log('====StylishKurti-API-Error====>', error);
+    }
+    setloaded(false);
+  };
+
+  const GetSpecialSaree = async () => {
+    try {
+      let result = await fetch(
+        'https://charming-calf-pea-coat.cyclic.app/api/AllCategories/SSC',
+      );
+
+      let res = await result.json();
+      let resdata = await res;
+
+      let ApiData = resdata.Specialsareecollections[0].Productlist;
+
+      setSpecialSareeApiData(ApiData);
+      // console.log('===SpecialSaree-Api-resdata======>', SpecialSareeApiData);
+    } catch (error) {
+      console.log('====SpecialSaree-API-Error====>', error);
+    }
+    setloaded(false);
+  };
+
   const Data2 = [
     {
       img: require('../../Assets/images/secf1.jpg'),
@@ -265,12 +309,13 @@ const Dashboard = ({navigation}) => {
   return (
     <ViewContainer>
       <StatusBar backgroundColor={Colors.purpledark} />
+      <Loader loading={loaded} />
 
       <Headers title="DashBord" />
       <ScrollContainer style={{flex: 1}}>
         <View>
-          <CtegoiresList 
-            // onPress={() => navigation.navigate('CardDetails', {data: Data1})}
+          <CtegoiresList
+          // onPress={() => navigation.navigate('CardDetails', {data: Data1})}
           />
         </View>
 
@@ -278,64 +323,70 @@ const Dashboard = ({navigation}) => {
 
         <Collection
           title="Western dress collection"
-          onPress={() => navigation.navigate('ShowAll', {data: Data1})}
+          onPress={() =>
+            navigation.navigate('ShowAll', {data: WesternDressApiData})
+          }
         />
-        <View>
-          <Card
-            data={Data1}
-          />
-        </View>
+
+        <Card data={WesternDressApiData} />
 
         <Swipers SwipersImages={SwipersImages2} />
 
         <Collection
           title="Stylish Kurti Collection"
-          onPress={() => navigation.navigate('ShowAll', {data: Data2})}
+          onPress={() =>
+            navigation.navigate('ShowAll', {data: StylishKurtiApiData})
+          }
         />
-        <Card data={Data2} />
+        <Card data={StylishKurtiApiData} />
 
         <Collection title="Trending Kurti Collection" />
-        <Card data={Data1} />
+        {/* <Card data={Data1} /> */}
         <Swipers SwipersImages={SwipersImages1} />
 
-        <Collection title="Special Saree Collection" />
-        <Card data={Data2} />
+        <Collection
+          title="Special Saree Collection"
+          onPress={() =>
+            navigation.navigate('ShowAll', {data: SpecialSareeApiData})
+          }
+        />
+        <Card data={SpecialSareeApiData} />
 
         <Collection title="Fashion Saree Collection" />
 
-        <Card data={Data1} />
+        {/* <Card data={Data1} /> */}
         <Swipers SwipersImages={SwipersImages2} />
 
         <Collection title="Top Selling Kurti" />
 
-        <Card data={Data2} />
+        {/* <Card data={Data2} /> */}
 
         <Collection title="Long Kurti Collection" />
 
-        <Card data={Data1} />
+        {/* <Card data={Data1} /> */}
 
         <Swipers SwipersImages={SwipersImages1} />
 
         <Collection title="Top Saree Collection" />
 
-        <Card data={Data2} />
+        {/* <Card data={Data2} /> */}
 
         <Collection title=" Womens Saree Collection" />
-        <Card data={Data1} />
+        {/* <Card data={Data1} /> */}
         <Swipers SwipersImages={SwipersImages2} />
 
         <Collection title="Dresses for you" />
-        <Card data={Data2} />
+        {/* <Card data={Data2} /> */}
 
         <Collection title="Western Dresses For Women" />
-        <Card data={Data1} />
+        {/* <Card data={Data1} /> */}
 
         <Collection title="Bridal Wedding Collections" />
-        <Card data={Data2} />
+        {/* <Card data={Data2} /> */}
 
         <Collection title="Branded Jeans Collections" />
         <Collection title="Steller Styles For Him" />
-        <Card data={Data1} />
+        {/* <Card data={Data1} /> */}
 
         <Collection title="New Arrivals Trousers" />
       </ScrollContainer>

@@ -8,7 +8,9 @@ import {useIsFocused} from '@react-navigation/native';
 
 const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
   const [LikeCHenge, setLikeCHenge] = useState(IconPath.unlike);
-  const [CartData, setCartData] = useState(data);
+  // const [CartData, setCartData] = useState(data);
+
+  // console.log('====data===>',data);
 
   const ImageChengeFUnction = index => {
     let chenge =
@@ -16,6 +18,7 @@ const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
     setLikeCHenge(chenge);
   };
   const renderItem1 = ({item, index}) => {
+    // console.log('====Card-Item====>',item);
     return (
       <Clickable style={styles.fltcontainer1} onPress={onPress}>
         <View
@@ -26,36 +29,39 @@ const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
             borderTopRightRadius: 10,
             height: 220,
           }}>
-          <Image source={item.img} style={styles.img1} resizeMode="contain" />
+          <Image
+            source={{uri: item.Image[0]}}
+            style={styles.img1}
+            resizeMode="contain"
+          />
         </View>
         <Clickable
           style={styles.heartcontainer}
           onPress={() => ImageChengeFUnction(item, index)}>
           <Image source={LikeCHenge} style={styles.heart} />
-          {/* <Image source={item.Icon} style={styles.heart} /> */}
         </Clickable>
         <View style={styles.persentcontainer}>
           <Paragraph
             size={13}
             color={Colors.purple}
             style={{fontWeight: 'bold'}}>
-            {item.p}
+            {item.disPrsent}
           </Paragraph>
         </View>
 
-
-        
         <View style={{marginVertical: 5, marginHorizontal: 15}}>
-          <Paragraph color={Colors.darkgray} size={13}>
-            {item.name}
-          </Paragraph>
+          <View style={{width: '100%', height: 18}}>
+            <Paragraph color={Colors.darkgray} size={13}>
+              {item.title}
+            </Paragraph>
+          </View>
           <Paragraph color="green" style={{fontWeight: 'bold'}}>
-            {item.price}
+            {item.disPrice}
             {'  '}
             <Paragraph
               style={{textDecorationLine: 'line-through'}}
               color={Colors.darkgray}>
-              {item.half}
+              {item.sellingPrice}
             </Paragraph>
           </Paragraph>
           <View
@@ -68,23 +74,23 @@ const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
               left: 5,
             }}>
             <Image
-              source={item.rating}
+              source={IconPath.rating}
               style={{width: 13, height: 13, tintColor: Colors.orrenge}}
             />
             <Image
-              source={item.rating}
+              source={IconPath.rating}
               style={{width: 13, height: 13, tintColor: Colors.orrenge}}
             />
             <Image
-              source={item.rating}
+              source={IconPath.rating}
               style={{width: 13, height: 13, tintColor: Colors.orrenge}}
             />
             <Image
-              source={item.rating}
+              source={IconPath.rating}
               style={{width: 13, height: 13, tintColor: Colors.orrenge}}
             />
             <Image
-              source={item.rating}
+              source={IconPath.rating}
               style={{width: 13, height: 13, tintColor: Colors.orrenge}}
             />
           </View>
@@ -94,11 +100,7 @@ const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
   };
   return (
     <View>
-      <FlatList
-        renderItem={renderItem1}
-        data={CartData}
-        horizontal={horizontal}
-      />
+      <FlatList renderItem={renderItem1} data={data} horizontal={horizontal} />
     </View>
   );
 };

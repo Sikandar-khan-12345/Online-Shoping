@@ -5,11 +5,15 @@ import Paragraph from '../UI/Paragraph';
 import {useIsFocused} from '@react-navigation/native';
 import Clickable from '../HOC/Clickble';
 import Colors from '../../constents/Colors';
+import Loader from '../UI/Loader';
 
 const CtegoiresList = ({onPress = () => {}}) => {
+  
+  const [loaded, setloaded] = useState(true)
   const [ApiData, setApiData] = useState([]);
   useEffect(() => {
     GetCategories();
+    
   }, [useIsFocused]);
 
   const GetCategories = async () => {
@@ -22,18 +26,19 @@ const CtegoiresList = ({onPress = () => {}}) => {
       // console.log('===>Res===>',res);
 
       let ResData = await res;
-      let Data = ResData.data.Categories;
+      let Data = ResData.Categories;
+     
 
       setApiData(Data);
 
-      console.log('====ResData===>', ApiData);
+      // console.log('====ResData===>', Data);
     } catch (err) {
       console.log('==Error===>', err);
     }
+    setloaded(false)
   };
 
   const renderItem = ({item}) => {
-    // console.log('===Item===>',item);
     return (
       <Clickable style={styles.fltcontainer} onPress={onPress}>
         <View style={styles.ImgContainer}>
@@ -51,6 +56,7 @@ const CtegoiresList = ({onPress = () => {}}) => {
   };
   return (
     <View>
+      <Loader loading = {loaded}/>
       <FlatList renderItem={renderItem} data={ApiData} horizontal />
     </View>
   );

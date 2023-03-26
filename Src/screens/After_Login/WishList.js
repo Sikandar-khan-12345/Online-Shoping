@@ -9,9 +9,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clickable from '../../components/HOC/Clickble';
 import ViewContainer from '../../components/HOC/ViewContainer';
 import SimpleToast from 'react-native-simple-toast';
+import Loader from '../../components/UI/Loader';
 
 const WishList = ({navigation}) => {
   const [WishList, setWishListt] = useState([]);
+  const [loaded, setloaded] = useState(true);
 
   const DeleteWishlist = async item => {
     console.log('==WishList-Delete-Api-item===>', item);
@@ -59,17 +61,24 @@ const WishList = ({navigation}) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    let data = await fetch(
-      'https://charming-calf-pea-coat.cyclic.app/api/shopeen/wishlish',
-      obj,
-    );
-    let res = await data.json();
-    let response = await res;
-    setWishListt(response.data||[]);
-    if (response.massage) {
-      SimpleToast.show(response.massage,SimpleToast.SHORT)
+    try {
+      let data = await fetch(
+        'https://charming-calf-pea-coat.cyclic.app/api/shopeen/wishlish',
+        obj,
+      );
+      let res = await data.json();
+      let response = await res;
+      setWishListt(response.data || []);
+      if (response.massage) {
+        SimpleToast.show(response.massage, SimpleToast.SHORT);
+      }
+      console.log('====WishList====>', response);
+    } catch (err) {
+      alert('Sorry! Wishlist Api Internal Server Error')
+      console.log('====WishList-Api-Error====>', err);
     }
-    console.log('====WishList====>', response);
+
+    setloaded(false);
   };
 
   const renderItem = ({item}) => {
@@ -124,7 +133,7 @@ const WishList = ({navigation}) => {
   return (
     <ViewContainer>
       <Headers title="Wishlist" />
-      <FlatList renderItem={renderItem} data={WishList} numColumns={2} />
+      <Loader loading={loaded} />
       {WishList?.length == 0 ? (
         <View style={styles.WishListContainer}>
           <Image source={ImagePath.EmptyWishlist} style={styles.WishListImg} />
@@ -135,6 +144,8 @@ const WishList = ({navigation}) => {
       ) : (
         ''
       )}
+
+      <FlatList renderItem={renderItem} data={WishList} numColumns={2} />
     </ViewContainer>
   );
 };

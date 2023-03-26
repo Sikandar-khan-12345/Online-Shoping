@@ -12,13 +12,12 @@ import Headers from '../../components/comancomponents/Headers';
 import RadioForm from 'react-native-simple-radio-button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 const AddAddress = ({navigation}) => {
   const items = [
-    {label: 'Home', value: "Home"},
-    {label: 'Work', value: "Work"},
+    {label: 'Home', value: 'Home'},
+    {label: 'Work', value: 'Work'},
   ];
-
+  const [loaded, setloaded] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [value, setvalue] = useState('Home');
@@ -33,8 +32,9 @@ const AddAddress = ({navigation}) => {
   const [error, seterror] = useState({});
 
   const AddWIthValidation = async () => {
+    setloaded(true)
     let token = await AsyncStorage.getItem('Token');
-    token = await JSON.parse(token)
+    token = await JSON.parse(token);
     const form = {
       FirstName: validators.checkRequire('First Name', firstname),
       LastName: validators.checkRequire('Last Name', lastname),
@@ -68,7 +68,6 @@ const AddAddress = ({navigation}) => {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(body),
-    
         };
         let results = await fetch(
           'https://charming-calf-pea-coat.cyclic.app/api/shopeen/address/add',
@@ -83,9 +82,11 @@ const AddAddress = ({navigation}) => {
 
         console.log('=====resdata=====>', resdata.data);
       } catch (error) {
+        alert('Sorry! AddAddress Api Error')
         console.log('==Addres-Api-Error===>', error);
       }
     }
+    setloaded(false)
   };
 
   return (
@@ -172,7 +173,7 @@ const AddAddress = ({navigation}) => {
           </View>
         </View>
 
-        <UiButton onPress={() => AddWIthValidation()} />
+        <UiButton onPress={() => AddWIthValidation()} loading={loaded} />
       </ScrollContainer>
     </ViewContainer>
   );

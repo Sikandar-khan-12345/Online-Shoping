@@ -11,8 +11,10 @@ import CheckBox from '@react-native-community/checkbox';
 import Clickable from '../../components/HOC/Clickble';
 import {IconPath} from '../../Assets';
 import SimpleToast from 'react-native-simple-toast';
+import Loader from '../../components/UI/Loader';
 
 const Address = ({navigation}) => {
+  const [loaded, setloaded] = useState(true)
   const [AddressList, setAddressList] = useState([]);
   const [isSelected, setSelection] = useState(true);
 
@@ -53,8 +55,10 @@ const Address = ({navigation}) => {
 
       console.log('===Addres-Get-Api-AddressList===>', AddressList);
     } catch (error) {
+      alert('Sorry! GetAddress Api Error')
       console.log('===Addres-Get-Api-Error===>', error);
     }
+    setloaded(false)
   };
 
   const AddressDelete = async item => {
@@ -141,6 +145,7 @@ const Address = ({navigation}) => {
         type="Icon"
         onPress={() => navigation.goBack()}
       />
+      <Loader loading = {loaded}/>
       <FlatList renderItem={renderItem} data={AddressList} />
       <UiButton
         text="Add New Address"

@@ -6,8 +6,10 @@ import Paragraph from '../../components/UI/Paragraph';
 import Clickable from '../../components/HOC/Clickble';
 import Headers from '../../components/comancomponents/Headers';
 
-const ShowAll = ({route,navigation}) => {
+const ShowAll = ({route, navigation}) => {
   const CardList = route?.params?.data;
+
+  // console.log('===ShowAll====>', CardList);
   const [LikeCHenge, setLikeCHenge] = useState(IconPath.unlike);
 
   const ImageChengeFUnction = index => {
@@ -28,7 +30,11 @@ const ShowAll = ({route,navigation}) => {
             borderTopRightRadius: 10,
             height: 220,
           }}>
-          <Image source={item.img} style={styles.img1} resizeMode="contain" />
+          <Image
+            source={{uri: item.Image[0]}}
+            style={styles.img1}
+            resizeMode="contain"
+          />
         </View>
         <Clickable
           style={styles.heartcontainer}
@@ -40,21 +46,23 @@ const ShowAll = ({route,navigation}) => {
             size={13}
             color={Colors.purple}
             style={{fontWeight: 'bold'}}>
-            {item.p}
+            -{item.disPrsent}
           </Paragraph>
         </View>
 
         <View style={{marginVertical: 5, marginHorizontal: 15}}>
-          <Paragraph color={Colors.darkgray} size={13}>
-            {item.name}
-          </Paragraph>
+          <View style={{height: 18}}>
+            <Paragraph color={Colors.darkgray} size={13}>
+              {item.title}
+            </Paragraph>
+          </View>
           <Paragraph color="green" style={{fontWeight: 'bold'}}>
-            {item.price}
+            {item.disPrice}
             {'  '}
             <Paragraph
               style={{textDecorationLine: 'line-through'}}
               color={Colors.darkgray}>
-              {item.half}
+              {item.sellingPrice}
             </Paragraph>
           </Paragraph>
           <View
@@ -66,23 +74,23 @@ const ShowAll = ({route,navigation}) => {
               justifyContent: 'space-between',
             }}>
             <Image
-              source={item.rating}
+              source={IconPath.rating}
               style={{width: 13, height: 13, tintColor: Colors.orrenge}}
             />
             <Image
-              source={item.rating}
+              source={IconPath.rating}
               style={{width: 13, height: 13, tintColor: Colors.orrenge}}
             />
             <Image
-              source={item.rating}
+              source={IconPath.rating}
               style={{width: 13, height: 13, tintColor: Colors.orrenge}}
             />
             <Image
-              source={item.rating}
+              source={IconPath.rating}
               style={{width: 13, height: 13, tintColor: Colors.orrenge}}
             />
             <Image
-              source={item.rating}
+              source={IconPath.rating}
               style={{width: 13, height: 13, tintColor: Colors.orrenge}}
             />
           </View>
@@ -92,7 +100,11 @@ const ShowAll = ({route,navigation}) => {
   };
   return (
     <View style={{flex: 1}}>
-      <Headers type="Icon" title="Western dress collection" onPress={() =>navigation.goBack()} />
+      <Headers
+        type="Icon"
+        title="Western dress collection"
+        onPress={() => navigation.goBack()}
+      />
       <View style={{flex: 1, marginVertical: 25}}>
         <FlatList renderItem={renderItem1} data={CardList} numColumns={2} />
       </View>

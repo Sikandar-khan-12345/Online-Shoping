@@ -6,18 +6,17 @@ import ViewContainer from '../../components/HOC/ViewContainer';
 import Paragraph from '../../components/UI/Paragraph';
 import Colors from '../../constents/Colors';
 import Loader from '../../components/UI/Loader';
-import { IconPath } from '../../Assets';
+import {IconPath} from '../../Assets';
 import Clickable from '../../components/HOC/Clickble';
 
 const Categoires = ({navigation}) => {
   const [ApiData, setApiData] = useState([]);
-  const [Loaded, setLoaded] = useState(false);
+  const [Loaded, setLoaded] = useState(true);
   useEffect(() => {
     GetCategoriseData();
   }, [useIsFocused()]);
 
   const GetCategoriseData = async () => {
-    // setLoaded(true);
     try {
       let Results = await fetch(
         'https://charming-calf-pea-coat.cyclic.app/api/AllCategories',
@@ -26,31 +25,31 @@ const Categoires = ({navigation}) => {
       let res = await Results.json();
       let ResData = await res;
 
-      let Data = ResData.data.Categories;
-      // setLoaded(false);
+      let Data = ResData.Categories;
+      setLoaded(false);
 
       setApiData(Data);
 
-      console.log('==ApiData===>', ApiData);
+      // console.log('==ApiData===>', ApiData);
     } catch (err) {
+      alert('Sorry! Categories Api Error');
       console.log('==ERROR==>', err);
     }
   };
 
   const renderItemTItle = ({item}) => {
-    // console.log('===Devika===>',item);
     return (
-      <Clickable onPress={() =>navigation.navigate('ProductsList',{data:item})}>
+      <Clickable
+        onPress={() => navigation.navigate('ProductsList', {data: item})}>
         <Paragraph style={{paddingVertical: 10, fontWeight: '500'}}>
           {item.title}
         </Paragraph>
-
       </Clickable>
     );
   };
 
   const renderItem = ({item}) => {
-    console.log('==>Item===>', item.data);
+    // console.log('==>Item===>', item.data);
     return (
       <View style={styles.FlatListMainContainer}>
         <View style={styles.ImgMainContainer}>
@@ -58,7 +57,10 @@ const Categoires = ({navigation}) => {
             <Paragraph left={20} size={18} style={{fontWeight: 'bold'}}>
               {item.title}
             </Paragraph>
-          <Image source={IconPath.NextArrow} style={{width:15,height:15,left:25,top:7}}/>
+            <Image
+              source={IconPath.NextArrow}
+              style={{width: 15, height: 15, left: 25, top: 7}}
+            />
           </View>
           <View style={styles.ImgContainer}>
             <Image
