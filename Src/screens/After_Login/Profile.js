@@ -74,7 +74,7 @@ const Profile = ({navigation}) => {
   };
   return (
     <ViewContainer style={{backgroundColor: Colors.white, flex: 1}}>
-      <Headers  title='Profile'/>
+      <Headers title="Profile" />
       <View style={styles.AppIconMainContainer}>
         <View style={styles.imgContainer}>
           <Image source={ImagePath.AppIcon} style={styles.AppIcon} />
@@ -88,10 +88,9 @@ const Profile = ({navigation}) => {
           </Paragraph>
         </View>
       </View>
-      <View style={{top: -15, flex:1}}>
+      <View style={{top: -15, flex: 1}}>
         <FlatList renderItem={renderItem} data={Data} />
       </View>
-     
     </ViewContainer>
   );
 };
@@ -150,5 +149,4 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
- 
 });

@@ -38,13 +38,6 @@ export const IconPath = {
   return: require('./icons/return.png'),
   express: require('./icons/express-Delivery.png'),
   craditcard: require('./icons/credit-card.png'),
-
-
-
-
-
-
-
 };
 export const ImagePath = {
   shoping: require('./images/Online-Shoping.jpg'),
@@ -62,5 +55,4 @@ export const ImagePath = {
   secs3: require('./images/secs3.jpg'),
   EmptyCart: require('./images/EmptyCart.jpg'),
   EmptyWishlist: require('./images/EmptyWishlist.png'),
-
 };

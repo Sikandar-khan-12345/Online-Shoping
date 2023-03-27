@@ -33,6 +33,7 @@ const CtegoiresList = ({onPress = () => {}}) => {
 
       // console.log('====ResData===>', Data);
     } catch (err) {
+      alert('Categories Api Error')
       console.log('==Error===>', err);
     }
     setloaded(false)
