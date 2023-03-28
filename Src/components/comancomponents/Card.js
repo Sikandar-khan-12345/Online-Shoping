@@ -33,6 +33,8 @@ const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
             source={{uri: item.Image[0]}}
             style={styles.img1}
             resizeMode="contain"
+            key={item.Image}
+
           />
         </View>
         <Clickable

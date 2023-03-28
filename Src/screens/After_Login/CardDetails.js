@@ -43,6 +43,7 @@ const CardDetails = ({route, navigation}) => {
       dis: CardListData.disPrice,
       price: CardListData.sellingPrice,
       img: CardListData.Image[0],
+      disPrsent:CardListData.disPrsent
     };
 
     let Data = {
@@ -55,7 +56,7 @@ const CardDetails = ({route, navigation}) => {
     };
 
     let result = await fetch(
-      'https://charming-calf-pea-coat.cyclic.app/api/shopeen/wishlish/add',
+      'https://awsnodejs.onrender.com/DreamCoder/api/addWishListProduct',
       Data,
     );
     let res = await result.json();
@@ -107,7 +108,6 @@ const CardDetails = ({route, navigation}) => {
       
 
       };
-      console.log("====body==body",body)
       let Data = {
         method: 'POST',
         headers: {
@@ -117,7 +117,7 @@ const CardDetails = ({route, navigation}) => {
         body: JSON.stringify(body),
       };
       let results = await fetch(
-        'https://charming-calf-pea-coat.cyclic.app/api/shopeen/addtocard/add',
+        'https://awsnodejs.onrender.com/DreamCoder/api/addCartProduct',
         Data,
       );
       let res = await results.json();

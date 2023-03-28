@@ -29,7 +29,7 @@ const WishList = ({navigation}) => {
     };
     try {
       let result = await fetch(
-        `https://charming-calf-pea-coat.cyclic.app/api/shopeen/wishlish/${item._id}`,
+        `https://awsnodejs.onrender.com/DreamCoder/api/DeleteWishListProduct/${item._id}`,
         Data,
       );
       let res = await result.json();
@@ -63,7 +63,7 @@ const WishList = ({navigation}) => {
     };
     try {
       let data = await fetch(
-        'https://charming-calf-pea-coat.cyclic.app/api/shopeen/wishlish',
+        'https://awsnodejs.onrender.com/DreamCoder/api/getWishListProduct',
         obj,
       );
       let res = await data.json();

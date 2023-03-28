@@ -39,7 +39,7 @@ const Cart = () => {
     };
     try {
       let result = await fetch(
-        `https://charming-calf-pea-coat.cyclic.app/api/shopeen/addtocard/${item._id}`,
+        `https://awsnodejs.onrender.com/DreamCoder/api/DeleteProduct/${item._id}`,
         Data,
       );
       let res = await result.json();
@@ -74,7 +74,7 @@ const Cart = () => {
 
     try{
       let data = await fetch(
-        'https://charming-calf-pea-coat.cyclic.app/api/shopeen/addtocard',
+        'https://awsnodejs.onrender.com/DreamCoder/api/getCartProduct',
         obj,
       );
       let res = await data.json();
@@ -106,7 +106,7 @@ const Cart = () => {
           />
         </View>
         <View style={styles.txtMainCOntainer}>
-          <View style={{borderWidth: 0, width: '100%', height: 20}}>
+          <View style={{borderWidth: 0, width: '100%', height: 20,}}>
             <Paragraph style={styles.txt}>{item.title}...</Paragraph>
           </View>
           <Paragraph style={styles.txt1}>Color:{item.color}</Paragraph>

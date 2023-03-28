@@ -48,8 +48,8 @@ const SignUp = ({navigation}) => {
     if (isValidForm(Form)) {
       try {
         let body = {
-          firstname: firstname,
-          lastname: lastname,
+          firstName: firstname,
+          lastName: lastname,
           email: email,
           password: password,
           gender: gender,
@@ -60,7 +60,7 @@ const SignUp = ({navigation}) => {
           body: JSON.stringify(body),
         };
         let results = await fetch(
-          'https://charming-calf-pea-coat.cyclic.app/api/shopeen/signup',
+          'https://awsnodejs.onrender.com/DreamCoder/api/userAuth/signup',
           Data,
         );
 
@@ -70,6 +70,9 @@ const SignUp = ({navigation}) => {
         if (resdata.status == true) {
           // await AsyncStorage.setItem('SignUp', JSON.stringify(resdata.token));
           navigation.navigate('ButtomTab');
+        }
+        else{
+          alert('User already exists')
         }
 
         console.log('===Signup-resdata===>', resdata);

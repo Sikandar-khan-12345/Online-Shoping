@@ -40,7 +40,7 @@ const Login = ({navigation}) => {
         };
 
         let results = await fetch(
-          'https://charming-calf-pea-coat.cyclic.app/api/shopeen/login',
+          'https://awsnodejs.onrender.com/DreamCoder/api/userAuth/login',
           Data,
         );
         let res = await results.json();
