@@ -1,8 +1,8 @@
-import {StyleSheet, View, Image, Share, Alert, FlatList} from 'react-native';
-import React, {useState} from 'react';
+import { StyleSheet, View, Image, Share, Alert, FlatList } from 'react-native';
+import React, { useState } from 'react';
 import ScrollContainer from '../../components/HOC/ScrollContainer';
 import Colors from '../../constents/Colors';
-import {IconPath} from '../../Assets';
+import { IconPath } from '../../Assets';
 import Clickable from '../../components/HOC/Clickble';
 import ViewContainer from '../../components/HOC/ViewContainer';
 import UiButton from '../../components/UI/UiButton';
@@ -10,12 +10,12 @@ import Paragraph from '../../components/UI/Paragraph';
 import Input from '../../components/UI/Input';
 import Swiper from 'react-native-swiper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AddtoCartApi, AddtoWishListApi } from '../../api/ApiLink';
 
-const CardDetails = ({route, navigation}) => {
+const CardDetails = ({ route, navigation }) => {
   const [LikeChenge, setLikeChenge] = useState(IconPath.unlike);
   const [colorss, setcolorss] = useState(Colors.gray);
   const [count, setcount] = useState(1);
-
   const CardListData = route?.params?.data;
   console.log('====CardList===>', CardListData);
 
@@ -28,7 +28,7 @@ const CardDetails = ({route, navigation}) => {
       Alert.alert(error.message);
     }
   };
-  const AddtoWishList = async() => {
+  const AddtoWishList = async () => {
     let token = await AsyncStorage.getItem('Token');
     token = await JSON.parse(token);
 
@@ -43,7 +43,7 @@ const CardDetails = ({route, navigation}) => {
       dis: CardListData.disPrice,
       price: CardListData.sellingPrice,
       img: CardListData.Image[0],
-      disPrsent:CardListData.disPrsent
+      disPrsent: CardListData.disPrsent
     };
 
     let Data = {
@@ -56,12 +56,12 @@ const CardDetails = ({route, navigation}) => {
     };
 
     let result = await fetch(
-      'https://awsnodejs.onrender.com/DreamCoder/api/addWishListProduct',
+      AddtoWishListApi,
       Data,
     );
     let res = await result.json();
     let resdata = await res;
-    if(resdata){
+    if (resdata) {
       alert("Product Added Wishlist...")
     }
     console.log('==Wishlist-resdata====>', resdata);
@@ -78,7 +78,7 @@ const CardDetails = ({route, navigation}) => {
       setcount(a);
     }
   };
-  
+
   const ColorsChenge = index => {
     // let arr = [...data];
     // arr[index].color =
@@ -103,9 +103,9 @@ const CardDetails = ({route, navigation}) => {
         Status: CardListData.Status,
         size: CardListData.size,
         quentity: CardListData.quentity,
-        color:CardListData.color,
-        disPrsent:CardListData.disPrsent
-      
+        color: CardListData.color,
+        disPrsent: CardListData.disPrsent
+
 
       };
       let Data = {
@@ -117,12 +117,12 @@ const CardDetails = ({route, navigation}) => {
         body: JSON.stringify(body),
       };
       let results = await fetch(
-        'https://awsnodejs.onrender.com/DreamCoder/api/addCartProduct',
+        AddtoCartApi,
         Data,
       );
       let res = await results.json();
       let resdata = await res;
-      if(resdata){
+      if (resdata) {
         alert("Product Added...")
       }
       // await AsyncStorage.setItem('Cart', JSON.stringify(resdata));
@@ -131,7 +131,7 @@ const CardDetails = ({route, navigation}) => {
       console.log('==AddtoCart-Api-Error====', error);
     }
   };
-  const renderItem = ({item, index}) => {
+  const renderItem = ({ item, index }) => {
     // console.log('==SizeArray====>',item);
     return (
       <Clickable
@@ -155,26 +155,26 @@ const CardDetails = ({route, navigation}) => {
     <ViewContainer>
       <ScrollContainer>
         <View style={styles.ImhMainContainer}>
-          <View style={{width: '100%', height: 400, borderWidth: 0}}>
+          <View style={{ width: '100%', height: 400, borderWidth: 0 }}>
             <Swiper autoplay={true} showsPagination={false}>
               <Image
-                source={{uri: CardListData.Image[0]}}
-                style={{width: '100%', height: '100%'}}
+                source={{ uri: CardListData.Image[0] }}
+                style={{ width: '100%', height: '100%' }}
                 resizeMode="contain"
               />
               <Image
-                source={{uri: CardListData.Image[1]}}
-                style={{width: '100%', height: '100%'}}
+                source={{ uri: CardListData.Image[1] }}
+                style={{ width: '100%', height: '100%' }}
                 resizeMode="contain"
               />
               <Image
-                source={{uri: CardListData.Image[2]}}
-                style={{width: '100%', height: '100%'}}
+                source={{ uri: CardListData.Image[2] }}
+                style={{ width: '100%', height: '100%' }}
                 resizeMode="contain"
               />
             </Swiper>
           </View>
-          <View style={{position: 'absolute', top: 15, right: 2}}>
+          <View style={{ position: 'absolute', top: 15, right: 2 }}>
             <Clickable style={styles.IconContainer} onPress={() => AddtoWishList()}>
               <Image source={LikeChenge} style={styles.HeartIcon} />
             </Clickable>
@@ -199,7 +199,7 @@ const CardDetails = ({route, navigation}) => {
                 {CardListData.disPrice}
                 {'  '}
                 <Paragraph
-                  style={{textDecorationLine: 'line-through'}}
+                  style={{ textDecorationLine: 'line-through' }}
                   color={Colors.darkgray}>
                   {CardListData.sellingPrice}
                 </Paragraph>{' '}
@@ -241,7 +241,7 @@ const CardDetails = ({route, navigation}) => {
               </Paragraph>
             </View>
 
-            <Paragraph style={[styles.txt, {paddingVertical: 15}]}>
+            <Paragraph style={[styles.txt, { paddingVertical: 15 }]}>
               Select Your Size
             </Paragraph>
 
@@ -252,17 +252,17 @@ const CardDetails = ({route, navigation}) => {
                 horizontal
               />
             </View>
-            <Paragraph style={[styles.txt, {paddingVertical: 15}]}>
+            <Paragraph style={[styles.txt, { paddingVertical: 15 }]}>
               Select Colors
             </Paragraph>
             <View style={styles.ColorSelectImages}>
               <Image
-                source={{uri: CardListData.Image[0]}}
-                style={{width: '100%', height: '100%'}}
+                source={{ uri: CardListData.Image[0] }}
+                style={{ width: '100%', height: '100%' }}
                 resizeMode="cover"
               />
             </View>
-            <Paragraph style={[styles.txt, {paddingVertical: 15}]}>
+            <Paragraph style={[styles.txt, { paddingVertical: 15 }]}>
               Quantity
             </Paragraph>
             <View style={styles.IncMainContainer}>
@@ -285,7 +285,7 @@ const CardDetails = ({route, navigation}) => {
 
             <Paragraph style={styles.txt}>Delivery & Services</Paragraph>
             <View style={styles.DeliveryMainContainer}>
-              <View style={{flexDirection: 'row', marginVertical: 5}}>
+              <View style={{ flexDirection: 'row', marginVertical: 5 }}>
                 <View style={styles.IconContainer2}>
                   <Image
                     source={IconPath.delivery}
@@ -294,19 +294,19 @@ const CardDetails = ({route, navigation}) => {
                 </View>
                 <Paragraph left={10}>Delivery in 7-9 Days</Paragraph>
               </View>
-              <View style={{flexDirection: 'row', marginVertical: 5}}>
+              <View style={{ flexDirection: 'row', marginVertical: 5 }}>
                 <View style={styles.IconContainer2}>
                   <Image source={IconPath.return} style={styles.DeliveryIMG} />
                 </View>
                 <Paragraph left={10}>Return & Replacement</Paragraph>
               </View>
-              <View style={{flexDirection: 'row', marginVertical: 5}}>
+              <View style={{ flexDirection: 'row', marginVertical: 5 }}>
                 <View style={styles.IconContainer2}>
                   <Image source={IconPath.express} style={styles.DeliveryIMG} />
                 </View>
                 <Paragraph left={10}>4 hrs express delivery</Paragraph>
               </View>
-              <View style={{flexDirection: 'row', marginVertical: 5}}>
+              <View style={{ flexDirection: 'row', marginVertical: 5 }}>
                 <View style={styles.IconContainer2}>
                   <Image
                     source={IconPath.craditcard}
@@ -318,7 +318,7 @@ const CardDetails = ({route, navigation}) => {
             </View>
 
             <Paragraph style={styles.txt}>Highlights</Paragraph>
-            <View style={{marginVertical: 10}}>
+            <View style={{ marginVertical: 10 }}>
               <Paragraph>
                 .{'  '}
                 <Paragraph>{CardListData.ProductDetails.fabric}</Paragraph>
@@ -373,10 +373,10 @@ const CardDetails = ({route, navigation}) => {
         </View>
       </ScrollContainer>
       <View style={styles.btnMainContainer}>
-        <View style={[styles.btnContainer, {left: 5}]}>
-          <UiButton text="Buy now" style={{width: '87%'}} />
+        <View style={[styles.btnContainer, { left: 5 }]}>
+          <UiButton text="Buy now" style={{ width: '87%' }} />
         </View>
-        <View style={[styles.btnContainer, {right: 5}]}>
+        <View style={[styles.btnContainer, { right: 5 }]}>
           <UiButton
             text="Add to Cart"
             style={styles.btn}

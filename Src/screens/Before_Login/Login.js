@@ -11,6 +11,7 @@ import UiButton from '../../components/UI/UiButton';
 import {isValidForm, validators} from '../../constents/Validation';
 import Headers from '../../components/comancomponents/Headers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LoginApi } from '../../api/ApiLink';
 
 
 const Login = ({navigation}) => {
@@ -40,7 +41,7 @@ const Login = ({navigation}) => {
         };
 
         let results = await fetch(
-          'https://awsnodejs.onrender.com/DreamCoder/api/userAuth/login',
+          LoginApi,
           Data,
         );
         let res = await results.json();

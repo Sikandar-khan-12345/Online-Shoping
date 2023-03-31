@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SimpleToast from 'react-native-simple-toast';
 import { useSelector } from 'react-redux';
-import { print } from '../Constants/print';
+import { print } from '../constents/print'
 // import {strings} from '../Constants/language';
 
 // DEMO
@@ -178,20 +178,20 @@ export const GET = async (
     const res = await fetch(route, {
       headers: {
         'Content-Type': 'application/json',
-        'requestfrom': 'apps',
-        'device-token': deviceToken,
-        // 'Accept-Language': strings.getLanguage(),
+        // 'requestfrom': 'apps',
+        // 'device-token': deviceToken,
+        //  'Accept-Language': strings.getLanguage(),
       },
       method: 'GET',
     });
     // console.log(res.status);
-    if (res.status !== 200) {
-      // SimpleToast.show(
-      //   `Try Again, ${statusMessage[res.status]}`,
-      //   SimpleToast.SHORT,
-      // );
+    if (res.status) {
+      SimpleToast.show(
+        `Try Again, ${statusMessage[res.status]}`,
+        SimpleToast.SHORT,
+      );
       const resText = await res.text();
-      // console.log(resText);
+      console.log(resText);
       onError({ data: null, msg: statusMessage[res.status], status: 'error' });
       return { data: null, msg: statusMessage[res.status], status: 'error' };
     }
@@ -202,7 +202,8 @@ export const GET = async (
       return {
         ...resJSON,
       };
-    } else {
+    } 
+    else {
       // console.log(route, resJSON.msg);
       onError(resJSON);
       return {

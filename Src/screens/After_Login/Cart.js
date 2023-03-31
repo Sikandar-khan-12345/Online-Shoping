@@ -1,19 +1,20 @@
-import {Image, StyleSheet, Text, View, FlatList} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import { Image, StyleSheet, Text, View, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Headers from '../../components/comancomponents/Headers';
-import {ImagePath} from '../../Assets';
+import { ImagePath } from '../../Assets';
 import Paragraph from '../../components/UI/Paragraph';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Colors from '../../constents/Colors';
-import {useIsFocused} from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import ViewContainer from '../../components/HOC/ViewContainer';
 import Clickable from '../../components/HOC/Clickble';
 import SimpleToast from 'react-native-simple-toast';
 import Loader from '../../components/UI/Loader';
+import { DeleteCartApi, GetCartApi } from '../../api/ApiLink';
 
 const Cart = () => {
   const [cartList, setcartList] = useState([]);
-  const [loaded, setloaded] = useState(false);
+  const [loaded, setloaded] = useState(true);
   const [count, setcount] = useState(1);
   const Add = () => {
     if (count < 20) {
@@ -39,7 +40,7 @@ const Cart = () => {
     };
     try {
       let result = await fetch(
-        `https://awsnodejs.onrender.com/DreamCoder/api/DeleteProduct/${item._id}`,
+        DeleteCartApi + item._id,
         Data,
       );
       let res = await result.json();
@@ -58,9 +59,9 @@ const Cart = () => {
   };
   useEffect(() => {
     getCartData();
-  }, [useIsFocused()]);
+  }, [useIsFocused]);
   const getCartData = async () => {
-    setloaded(true)
+   // setloaded(true)
     let token = await AsyncStorage.getItem('Token');
     token = await JSON.parse(token);
     // console.log('===Token====>',token);
@@ -72,51 +73,55 @@ const Cart = () => {
       },
     };
 
-    try{
+    try {
       let data = await fetch(
-        'https://awsnodejs.onrender.com/DreamCoder/api/getCartProduct',
+        GetCartApi,
         obj,
       );
       let res = await data.json();
+      if(res){
+        // setloaded(false);
+
+      }
       let response = await res;
       // console.log('response', response);
-  
+
       setcartList(response.data || []);
       if (response.massage) {
         SimpleToast.show(response.massage, SimpleToast.SHORT);
       }
       console.log('====CartList====>', cartList);
     }
-    catch(err){
+    catch (err) {
       alert('Sorry! Cart Api Internal Server Error')
-      console.log('===AddToCart-Get-Api-Error',err);
+      console.log('===AddToCart-Get-Api-Error', err);
     }
     setloaded(false);
-  
+
   };
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     // console.log('====Cart===Item===>', item);
     return (
       <View style={styles.FlatListMainContainer}>
         <View style={styles.ImgMainContainer}>
           <Image
-            source={{uri: item.Image}}
-            style={{width: '100%', height: '100%'}}
+            source={{ uri: item.Image }}
+            style={{ width: '100%', height: '100%' }}
             resizeMode="contain"
           />
         </View>
         <View style={styles.txtMainCOntainer}>
-          <View style={{borderWidth: 0, width: '100%', height: 20,}}>
+          <View style={{ borderWidth: 0, width: '100%', height: 20, }}>
             <Paragraph style={styles.txt}>{item.title}...</Paragraph>
           </View>
           <Paragraph style={styles.txt1}>Color:{item.color}</Paragraph>
           <Paragraph style={styles.txt1}>Size:</Paragraph>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Paragraph style={styles.txt} size={15}>
               ₹{item.disPrice}{' '}
               <Paragraph
                 size={15}
-                style={{textDecorationLine: 'line-through'}}
+                style={{ textDecorationLine: 'line-through' }}
                 color={Colors.darkgray}>
                 {item.sellingPrice}
               </Paragraph>
@@ -154,7 +159,7 @@ const Cart = () => {
               </Clickable>
             </View>
           </View>
-          <Clickable style={{width: 55}} onPress={() => DeleteAPI(item)}>
+          <Clickable style={{ width: 55 }} onPress={() => DeleteAPI(item)}>
             <Paragraph color={Colors.red} style={styles.txt} size={15}>
               Remove
             </Paragraph>

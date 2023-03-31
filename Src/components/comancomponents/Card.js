@@ -6,7 +6,7 @@ import Colors from '../../constents/Colors';
 import Clickable from '../HOC/Clickble';
 import {useIsFocused} from '@react-navigation/native';
 
-const Card = ({data = [], horizontal = true, onPress = () => {}}) => {
+const Card = ({data = [], horizontal = true, onPress = () => {},navigation}) => {
   const [LikeCHenge, setLikeCHenge] = useState(IconPath.unlike);
   // const [CartData, setCartData] = useState(data);
 

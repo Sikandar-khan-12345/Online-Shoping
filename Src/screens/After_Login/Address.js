@@ -1,19 +1,20 @@
-import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import ViewContainer from '../../components/HOC/ViewContainer';
 import UiButton from '../../components/UI/UiButton';
 import Headers from '../../components/comancomponents/Headers';
-import {useIsFocused} from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Paragraph from '../../components/UI/Paragraph';
 import Colors from '../../constents/Colors';
 import CheckBox from '@react-native-community/checkbox';
 import Clickable from '../../components/HOC/Clickble';
-import {IconPath} from '../../Assets';
+import { IconPath } from '../../Assets';
 import SimpleToast from 'react-native-simple-toast';
 import Loader from '../../components/UI/Loader';
+import { DeleteAddressApi, GetAddressApi } from '../../api/ApiLink';
 
-const Address = ({navigation}) => {
+const Address = ({ navigation }) => {
   const [loaded, setloaded] = useState(true)
   const [AddressList, setAddressList] = useState([]);
   const [isSelected, setSelection] = useState(true);
@@ -35,7 +36,7 @@ const Address = ({navigation}) => {
 
     try {
       let result = await fetch(
-        'https://charming-calf-pea-coat.cyclic.app/api/shopeen/address',
+        GetAddressApi,
         obj,
       );
       let res = await result.json();
@@ -74,7 +75,7 @@ const Address = ({navigation}) => {
         },
       };
       let result = await fetch(
-        `https://charming-calf-pea-coat.cyclic.app/api/shopeen/address/${item._id}`,
+        DeleteAddressApi + item._id,
         Data,
       );
       let res = await result.json();
@@ -108,7 +109,7 @@ const Address = ({navigation}) => {
 
     setAddressList(arr);
   };
-  const renderItem = ({item, index}) => {
+  const renderItem = ({ item, index }) => {
     return (
       <View style={styles.FlatListMainContainer}>
         <Paragraph>
@@ -118,7 +119,7 @@ const Address = ({navigation}) => {
           {item.locality}
         </Paragraph>
         <View style={styles.checkboxContainer}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <CheckBox
               value={item.check}
               onValueChange={() => checkAddress(index)}
@@ -145,11 +146,11 @@ const Address = ({navigation}) => {
         type="Icon"
         onPress={() => navigation.goBack()}
       />
-      <Loader loading = {loaded}/>
+      <Loader loading={loaded} />
       <FlatList renderItem={renderItem} data={AddressList} />
       <UiButton
         text="Add New Address"
-        style={{width: '100%'}}
+        style={{ width: '100%' }}
         onPress={() => navigation.navigate('AddAddress')}
       />
     </ViewContainer>

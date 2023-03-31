@@ -1,17 +1,19 @@
-import {StyleSheet, Text, View, Image, FlatList} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Headers from '../../components/comancomponents/Headers';
-import {IconPath, ImagePath} from '../../Assets';
+import { IconPath, ImagePath } from '../../Assets';
 import Colors from '../../constents/Colors';
 import Paragraph from '../../components/UI/Paragraph';
-import {useIsFocused} from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Clickable from '../../components/HOC/Clickble';
 import ViewContainer from '../../components/HOC/ViewContainer';
 import SimpleToast from 'react-native-simple-toast';
 import Loader from '../../components/UI/Loader';
+import { GetWishListApi, DeleteWishListApi } from '../../api/ApiLink';
 
-const WishList = ({navigation}) => {
+const WishList = ({ navigation }) => {
+
   const [WishList, setWishListt] = useState([]);
   const [loaded, setloaded] = useState(true);
 
@@ -19,7 +21,6 @@ const WishList = ({navigation}) => {
     console.log('==WishList-Delete-Api-item===>', item);
     let token = await AsyncStorage.getItem('Token');
     token = await JSON.parse(token);
-
     let Data = {
       method: 'DELETE',
       headers: {
@@ -29,7 +30,7 @@ const WishList = ({navigation}) => {
     };
     try {
       let result = await fetch(
-        `https://awsnodejs.onrender.com/DreamCoder/api/DeleteWishListProduct/${item._id}`,
+        DeleteWishListApi + item._id,
         Data,
       );
       let res = await result.json();
@@ -43,7 +44,7 @@ const WishList = ({navigation}) => {
       }
       console.log('==WishList-Delete-Api-resdata===>', resdata);
     } catch (error) {
-      console.log('==WishList-Delete-Api-Error===>', error);
+      console.log('==WishList-Delete-Api-ErrorCatch===>', error);
     }
   };
 
@@ -63,7 +64,7 @@ const WishList = ({navigation}) => {
     };
     try {
       let data = await fetch(
-        'https://awsnodejs.onrender.com/DreamCoder/api/getWishListProduct',
+        GetWishListApi,
         obj,
       );
       let res = await data.json();
@@ -81,12 +82,12 @@ const WishList = ({navigation}) => {
     setloaded(false);
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     return (
       <Clickable style={styles.FlatMainContainer}>
         <View style={styles.ImageMainContainer}>
           <Image
-            source={{uri: item.img}}
+            source={{ uri: item.img }}
             style={styles.img}
             resizeMode="cover"
           />
@@ -100,20 +101,20 @@ const WishList = ({navigation}) => {
           <Paragraph
             size={13}
             color={Colors.purple}
-            style={{fontWeight: 'bold'}}>
+            style={{ fontWeight: 'bold' }}>
             {item.disPrsent}
           </Paragraph>
         </View>
 
-        <View style={{marginVertical: 5, marginHorizontal: 15}}>
+        <View style={{ marginVertical: 5, marginHorizontal: 15 }}>
           <Paragraph color={Colors.darkgray} size={13}>
             {item.title}
           </Paragraph>
-          <Paragraph color="green" style={{fontWeight: 'bold'}}>
+          <Paragraph color="green" style={{ fontWeight: 'bold' }}>
             {item.dis}
             {'  '}
             <Paragraph
-              style={{textDecorationLine: 'line-through'}}
+              style={{ textDecorationLine: 'line-through' }}
               color={Colors.darkgray}>
               {item.price}
             </Paragraph>

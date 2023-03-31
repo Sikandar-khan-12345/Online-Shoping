@@ -1,18 +1,19 @@
-import {StyleSheet, View, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import { StyleSheet, View, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import FormContainer from '../../components/HOC/FormContainer';
-import {ImagePath} from '../../Assets';
+import { ImagePath } from '../../Assets';
 import ViewContainer from '../../components/HOC/ViewContainer';
 import Input from '../../components/UI/Input';
 import Paragraph from '../../components/UI/Paragraph';
 import Colors from '../../constents/Colors';
 import UiButton from '../../components/UI/UiButton';
-import {isValidForm, validators} from '../../constents/Validation';
+import { isValidForm, validators } from '../../constents/Validation';
 import Headers from '../../components/comancomponents/Headers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
+import { SignUpApi } from '../../api/ApiLink';
 
-const SignUp = ({navigation}) => {
+const SignUp = ({ navigation }) => {
   const [loaded, setloaded] = useState(false)
   const [firstname, setfirstname] = useState('');
   const [lastname, setlastname] = useState('');
@@ -36,7 +37,7 @@ const SignUp = ({navigation}) => {
 
   const SignUpWithValidation = async () => {
     setloaded(true)
- 
+
     const Form = {
       FirstName: validators.checkRequire('First Name', firstname),
       LastName: validators.checkRequire('Last Name', lastname),
@@ -56,11 +57,11 @@ const SignUp = ({navigation}) => {
         };
         let Data = {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
         };
         let results = await fetch(
-          'https://awsnodejs.onrender.com/DreamCoder/api/userAuth/signup',
+          SignUpApi,
           Data,
         );
 
@@ -71,7 +72,7 @@ const SignUp = ({navigation}) => {
           // await AsyncStorage.setItem('SignUp', JSON.stringify(resdata.token));
           navigation.navigate('ButtomTab');
         }
-        else{
+        else {
           alert('User already exists')
         }
 
@@ -124,7 +125,7 @@ const SignUp = ({navigation}) => {
           error={error?.Gender}
         />
 
-        <UiButton text="Sign Up" onPress={() => SignUpWithValidation()} loading = {loaded} />
+        <UiButton text="Sign Up" onPress={() => SignUpWithValidation()} loading={loaded} />
         <Paragraph textAlign="center">
           I have Alrdy Account?{' '}
           <Paragraph

@@ -1,15 +1,16 @@
-import {StyleSheet, Text, View, FlatList, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Headers from '../../components/comancomponents/Headers';
-import {useIsFocused} from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import ViewContainer from '../../components/HOC/ViewContainer';
 import Paragraph from '../../components/UI/Paragraph';
 import Colors from '../../constents/Colors';
 import Loader from '../../components/UI/Loader';
-import {IconPath} from '../../Assets';
+import { IconPath } from '../../Assets';
 import Clickable from '../../components/HOC/Clickble';
+import { GetCategoriseDataApi } from '../../api/ApiLink';
 
-const Categoires = ({navigation}) => {
+const Categoires = ({ navigation }) => {
   const [ApiData, setApiData] = useState([]);
   const [Loaded, setLoaded] = useState(true);
   useEffect(() => {
@@ -19,14 +20,14 @@ const Categoires = ({navigation}) => {
   const GetCategoriseData = async () => {
     try {
       let Results = await fetch(
-        'https://charming-calf-pea-coat.cyclic.app/api/AllCategories',
+        GetCategoriseDataApi,
       );
 
       let res = await Results.json();
       let ResData = await res;
 
       let Data = ResData.Categories;
-      setLoaded(false);
+      
 
       setApiData(Data);
 
@@ -35,36 +36,37 @@ const Categoires = ({navigation}) => {
       alert('Sorry! Categories Api Error');
       console.log('==ERROR==>', err);
     }
+    setLoaded(false);
   };
 
-  const renderItemTItle = ({item}) => {
+  const renderItemTItle = ({ item }) => {
     return (
       <Clickable
-        onPress={() => navigation.navigate('ProductsList', {data: item})}>
-        <Paragraph style={{paddingVertical: 10, fontWeight: '500'}}>
+        onPress={() => navigation.navigate('ProductsList', { data: item })}>
+        <Paragraph style={{ paddingVertical: 10, fontWeight: '500' }}>
           {item.title}
         </Paragraph>
       </Clickable>
     );
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     // console.log('==>Item===>', item.data);
     return (
       <View style={styles.FlatListMainContainer}>
         <View style={styles.ImgMainContainer}>
           <View style={styles.txtContainer}>
-            <Paragraph left={20} size={18} style={{fontWeight: 'bold'}}>
+            <Paragraph left={20} size={18} style={{ fontWeight: 'bold' }}>
               {item.title}
             </Paragraph>
             <Image
               source={IconPath.NextArrow}
-              style={{width: 15, height: 15, left: 25, top: 7}}
+              style={{ width: 15, height: 15, left: 25, top: 7 }}
             />
           </View>
           <View style={styles.ImgContainer}>
             <Image
-              source={{uri: item.Image}}
+              source={{ uri: item.Image }}
               style={styles.img}
               resizeMode="contain"
             />

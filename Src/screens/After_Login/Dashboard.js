@@ -1,5 +1,5 @@
-import {StatusBar, StyleSheet, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import { StatusBar, StyleSheet, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import ScrollContainer from '../../components/HOC/ScrollContainer';
 import Colors from '../../constents/Colors';
 import CtegoiresList from '../../components/comancomponents/CtegoiresList';
@@ -8,10 +8,13 @@ import Swipers from '../../components/comancomponents/Swipers';
 import Card from '../../components/comancomponents/Card';
 import Collection from '../../components/comancomponents/Collection';
 import ViewContainer from '../../components/HOC/ViewContainer';
-import {useIsFocused} from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import Loader from '../../components/UI/Loader';
+import { DashboardCardApi, DashBoardSwiperApi } from '../../api/ApiLink';
+import { GET } from '../../backend/Backend';
+import { GETDATA } from '../../api/apiFunc';
 
-const Dashboard = ({navigation}) => {
+const Dashboard = ({ navigation }) => {
   const [loaded, setloaded] = useState(true);
   const [DashBoardCard, setDashBoardCard] = useState([]);
 
@@ -36,24 +39,65 @@ const Dashboard = ({navigation}) => {
   const [Swiper4ApiData, setSwiper4ApiData] = useState([]);
   const [Swiper5ApiData, setSwiper5ApiData] = useState([]);
   const [Swiper6ApiData, setSwiper6ApiData] = useState([]);
-
+  const [temp1, settemp1] = useState([]);
   useEffect(() => {
+
     GetDashboardCard();
     GetAllSwiper();
-  }, [useIsFocused]);
+
+  }, [useIsFocused()]);
+  // setTimeout(()=>{
+  //   GetDashboardCard()
+  // },2000)
+
+  // const GetDashboardCard = async () => {
+  //   await GETDATA(
+  //     DashboardCardApi,
+  //     res => {
+       
+  //         settemp1(res?.Deshbord);
+        
+       
+  //       setloaded(false);
+  //       console.log("--:::==>", res)
+  //       setWesternDressApiData(temp1[0]?.Productlist);
+  //       setStylishKurtiApiData(temp1[1]?.Productlist);
+  //       setTrendingKurtiApiData(temp1[2]?.Productlist);
+  //       setSpecialSareeApiData(temp1[3]?.Productlist);
+  //       setFashionSareeApiData(temp1[4]?.Productlist);
+  //       // setTopSellingKurtiApiData(temp1[5].Productlist);
+  //       // setLongKurtiApiData(temp1[6]?.Productlist);
+  //       // setTopSareeApiData(temp1[7]?.Productlist);
+  //       // setWomensSareeApiData(temp1[8].Productlist);
+  //       // setDressForUApiData(temp1[9]?.Productlist);
+  //       // setWesternDressWomenApiData(temp1[10].Productlist);
+  //       // setBridalWeddingApiData(temp1[11].Productlist);
+  //       // setStellarStylesApiData(temp1[12].Productlist);
+  //       // setNewArrivalsApiData(temp1[13].Productlist);
+  //     },
+  //     err => {
+  //       console.log('SOMETHING WENT WRONG :: =>', err);
+  //     },
+  //     fai => {
+  //       console.log('API ERROR :: =>', fai);
+  //     },
+  //   );
+  //   return true;
+
+  // };
 
   const GetDashboardCard = async () => {
     try {
       let result = await fetch(
-        'https://charming-calf-pea-coat.cyclic.app/api/AllCategories/Deshbord',
+        DashboardCardApi,
       );
 
       let res = await result.json();
       let resdata = await res;
+       setloaded(false);
+   
 
-      let ApiData = resdata.Deshbord;
-      // setDashBoardCard(ApiData);
-      // console.log('===Dashboard All Card Api', DashBoardCard);
+      let ApiData = resdata.Deshbord
 
       setWesternDressApiData(ApiData[0].Productlist);
       setStylishKurtiApiData(ApiData[1].Productlist);
@@ -74,13 +118,13 @@ const Dashboard = ({navigation}) => {
     } catch (error) {
       console.log('====DashBoardCard-API-Error====>', error);
     }
-    setloaded(false);
+   
+  
   };
-
   const GetAllSwiper = async () => {
     try {
       let result = await fetch(
-        'https://charming-calf-pea-coat.cyclic.app/api/AllCategories/allSwaiper',
+        DashBoardSwiperApi
       );
       let res = await result.json();
       let resdata = await res;
@@ -94,11 +138,12 @@ const Dashboard = ({navigation}) => {
       setSwiper5ApiData(Data[4].Swaiper5);
       setSwiper6ApiData(Data[5].Swaiper6);
 
-      console.log('====All Swiper resdata===>', Data);
+      // console.log('====All Swiper resdata===>', Data);
     } catch (error) {
       alert('Swiper1 Api Error');
       console.log('===Swiper1 API Error ==>', error);
     }
+    setloaded(false)
   };
 
   return (
@@ -107,11 +152,9 @@ const Dashboard = ({navigation}) => {
       <Loader loading={loaded} />
 
       <Headers title="DashBord" />
-      <ScrollContainer style={{flex: 1}}>
+      <ScrollContainer style={{ flex: 1 }}>
         <View>
-          <CtegoiresList
-          // onPress={() => navigation.navigate('CardDetails', {data: Data1})}
-          />
+          <CtegoiresList />
         </View>
 
         <Swipers SwipersImages={Swiper1ApiData} />
@@ -119,127 +162,127 @@ const Dashboard = ({navigation}) => {
         <Collection
           title="Western dress collection"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: WesternDressApiData})
+            navigation.navigate('ShowAll', { data: WesternDressApiData })
           }
         />
 
-        <Card data={WesternDressApiData} />
+        <Card navigation={navigation}  data={WesternDressApiData} />
 
         <Swipers SwipersImages={Swiper2ApiData} />
 
         <Collection
           title="Stylish Kurti Collection"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: StylishKurtiApiData})
+            navigation.navigate('ShowAll', { data: StylishKurtiApiData })
           }
         />
-        <Card data={StylishKurtiApiData} />
+        <Card navigation={navigation} data={StylishKurtiApiData} />
 
         <Collection
           title="Trending Kurti Collection"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: TrendingKurtiApiData})
+            navigation.navigate('ShowAll', { data: TrendingKurtiApiData })
           }
         />
-        <Card data={TrendingKurtiApiData} />
+        <Card navigation={navigation} data={TrendingKurtiApiData} />
         <Swipers SwipersImages={Swiper3ApiData} />
 
         <Collection
           title="Special Saree Collection"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: SpecialSareeApiData})
+            navigation.navigate('ShowAll', { data: SpecialSareeApiData })
           }
         />
-        <Card data={SpecialSareeApiData} />
+        <Card navigation={navigation} data={SpecialSareeApiData} />
 
         <Collection
           title="Fashion Saree Collection"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: FashionSareeApiData})
+            navigation.navigate('ShowAll', { data: FashionSareeApiData })
           }
         />
 
-        <Card data={FashionSareeApiData} />
+        <Card navigation={navigation} data={FashionSareeApiData} />
         <Swipers SwipersImages={Swiper4ApiData} />
 
         <Collection
           title="Top Selling Kurti"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: TopSellingKurtiApiData})
+            navigation.navigate('ShowAll', { data: TopSellingKurtiApiData })
           }
         />
 
-        <Card data={TopSellingKurtiApiData} />
+        <Card navigation={navigation} data={TopSellingKurtiApiData} />
 
         <Collection
           title="Long Kurti Collection"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: LongKurtiApiData})
+            navigation.navigate('ShowAll', { data: LongKurtiApiData })
           }
         />
 
-        <Card data={LongKurtiApiData} />
+        <Card navigation={navigation} data={LongKurtiApiData} />
 
         <Swipers SwipersImages={Swiper5ApiData} />
 
         <Collection
           title="Top Saree Collection"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: TopSareeApiData})
+            navigation.navigate('ShowAll', { data: TopSareeApiData })
           }
         />
 
-        <Card data={TopSareeApiData} />
+        <Card navigation={navigation} data={TopSareeApiData} />
 
         <Collection
           title=" Womens Saree Collection"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: WomensSareeApiData})
+            navigation.navigate('ShowAll', { data: WomensSareeApiData })
           }
         />
-        <Card data={WomensSareeApiData} />
+        <Card navigation={navigation} data={WomensSareeApiData} />
         <Swipers SwipersImages={Swiper6ApiData} />
 
         <Collection
           title="Dresses for you"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: DressForUApiData})
+            navigation.navigate('ShowAll', { data: DressForUApiData })
           }
         />
-        <Card data={DressForUApiData} />
+        <Card navigation={navigation} data={DressForUApiData} />
 
         <Collection
           title="Western Dresses For Women"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: WesternDressWomenApiData})
+            navigation.navigate('ShowAll', { data: WesternDressWomenApiData })
           }
         />
-        <Card data={WesternDressWomenApiData} />
+        <Card navigation={navigation} data={WesternDressWomenApiData} />
 
         <Collection
           title="Bridal Wedding Collections"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: BridalWeddingApiData})
+            navigation.navigate('ShowAll', { data: BridalWeddingApiData })
           }
         />
-        <Card data={BridalWeddingApiData} />
+        <Card navigation={navigation} data={BridalWeddingApiData} />
 
         <Collection title="Branded Jeans Collections" />
         <Collection
           title="Steller Styles For Him"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: StellarStylesApiData})
+            navigation.navigate('ShowAll', { data: StellarStylesApiData })
           }
         />
-        <Card data={StellarStylesApiData} />
+        <Card navigation={navigation} data={StellarStylesApiData} />
 
         <Collection
           title="New Arrivals Trousers"
           onPress={() =>
-            navigation.navigate('ShowAll', {data: NewArrivalsApiData})
+            navigation.navigate('ShowAll', { data: NewArrivalsApiData })
           }
         />
-        <Card data={NewArrivalsApiData} />
+        <Card navigation={navigation} data={NewArrivalsApiData} />
       </ScrollContainer>
     </ViewContainer>
   );

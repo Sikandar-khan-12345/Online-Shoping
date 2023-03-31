@@ -11,6 +11,7 @@ import {isValidForm, validators} from '../../constents/Validation';
 import Headers from '../../components/comancomponents/Headers';
 import RadioForm from 'react-native-simple-radio-button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AddAddressApi } from '../../api/ApiLink';
 
 const AddAddress = ({navigation}) => {
   const items = [
@@ -70,7 +71,7 @@ const AddAddress = ({navigation}) => {
           body: JSON.stringify(body),
         };
         let results = await fetch(
-          'https://charming-calf-pea-coat.cyclic.app/api/shopeen/address/add',
+          AddAddressApi,
           Data,
         );
         let res = await results.json();

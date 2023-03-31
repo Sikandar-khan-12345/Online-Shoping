@@ -26,6 +26,7 @@ const CtegoiresList = ({onPress = () => {}}) => {
       // console.log('===>Res===>',res);
 
       let ResData = await res;
+      setloaded(false)
       let Data = ResData.Categories;
      
 
@@ -36,7 +37,7 @@ const CtegoiresList = ({onPress = () => {}}) => {
       alert('Categories Api Error')
       console.log('==Error===>', err);
     }
-    setloaded(false)
+   
   };
 
   const renderItem = ({item}) => {
